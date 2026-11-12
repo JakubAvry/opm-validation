@@ -1,0 +1,61 @@
+# SD
+1. Logistics Department Head is a physical and systemic object.
+2. Secretary is a physical and systemic object.
+3. Warehouseman Group is a physical and systemic object.
+4. Amount of Goods is an informatical and systemic object.
+5. Amount of Goods can be large or small.
+6. Goods is a physical and systemic object.
+7. Goods can be packaged, prepared or unpackaged.
+8. State unpackaged is initial.
+9. Logistic Company Group is a physical and environmental object.
+10. Package Label is a physical and systemic object.
+11. Parcel Insurance is an informatical and systemic object.
+12. Goods Shipping is a physical and systemic process.
+13. Logistics Department Head, Secretary, and Warehouseman Group handle Goods Shipping.
+14. Goods Shipping requires Amount of Goods.
+15. Goods Shipping affects Goods and Logistic Company Group.
+16. Goods Shipping yields Package Label and Parcel Insurance.
+# SD1
+1. Goods Shipping from SD zooms in SD1 into Shipping Clarifying, Offer Inviting, Logistic Company Selecting, parallel Goods Packaging, Package Label Writing, and Parcel Insurance Taking, and Pick-up Preparing, which occur in that time sequence, as well as Offer Set and Shipment.
+2. Secretary is a physical and systemic object.
+3. Amount of Goods is an informatical and systemic object.
+4. Amount of Goods can be large or small.
+5. Logistic Company Group is a physical and environmental object.
+6. Warehouseman Group is a physical and systemic object.
+7. Goods is a physical and systemic object.
+8. Goods can be packaged, prepared or unpackaged.
+9. State unpackaged is initial.
+10. Package Label is a physical and systemic object.
+11. Logistics Department Head is a physical and systemic object.
+12. Parcel Insurance is an informatical and systemic object.
+13. Offer Set is an informatical and systemic object.
+14. Shipment is an informatical and systemic object.
+15. Shipment can be normal, special or unclarified.
+16. State unclarified is initial.
+17. Goods exhibits Amount.
+18. Goods Shipping is a physical and systemic process.
+19. Shipping Clarifying is an informatical and systemic process.
+20. Secretary handles Shipping Clarifying.
+21. Shipping Clarifying requires Amount of Goods.
+22. Offer Inviting is an informatical and systemic process.
+23. Secretary handles Offer Inviting.
+24. Offer Inviting occurs if Shipment is at state special, otherwise Offer Inviting is skipped.
+25. Offer Inviting yields Offer Set.
+26. Logistic Company Selecting is an informatical and systemic process.
+27. Secretary handles Logistic Company Selecting.
+28. Logistic Company Selecting requires Offer Set.
+29. Logistic Company Selecting affects Logistic Company Group.
+30. Goods Packaging is a physical and systemic process.
+31. Goods Packaging changes Goods from unpackaged to packaged.
+32. Warehouseman Group handles Goods Packaging.
+33. Package Label Writing is a physical and systemic process.
+34. Secretary handles Package Label Writing.
+35. Package Label Writing occurs if Shipment is at state normal, otherwise Package Label Writing is skipped.
+36. Package Label Writing yields Package Label.
+37. Parcel Insurance Taking is an informatical and systemic process.
+38. Logistics Department Head handles Parcel Insurance Taking.
+39. Parcel Insurance Taking occurs if Shipment is at state normal, otherwise Parcel Insurance Taking is skipped.
+40. Parcel Insurance Taking yields Parcel Insurance.
+41. Pick-up Preparing is a physical and systemic process.
+42. Pick-up Preparing changes Goods from packaged to prepared.
+43. Shipping Clarifying changes Shipment from unclarified to exactly one of normal or special.

@@ -1,0 +1,89 @@
+# SD
+1. Financial Department is a physical and systemic object.
+2. It Department is a physical and systemic object.
+3. Management is a physical and systemic object.
+4. Supplier is a physical and environmental object.
+5. Hardware Request is an informatical and systemic object.
+6. Hardware Request can be approved, completed, denied or received.
+7. State received is initial.
+8. Invoice is an informatical and environmental object.
+9. Denial Email is an informatical and systemic object.
+10. Financial Resource Set is an informatical and systemic object.
+11. Form is an informatical and systemic object.
+12. Form can be approved, denied, filled or rework.
+13. State filled is initial.
+14. Hardware is a physical and systemic object.
+15. Offer is an informatical and environmental object.
+16. Order is an informatical and systemic object.
+17. Order can be accepted or sent.
+18. State sent is initial.
+19. Price Email is an informatical and systemic object.
+20. Hardware Buying is a physical and systemic process.
+21. Financial Department, It Department, Management, and Supplier handle Hardware Buying.
+22. Hardware Buying affects Hardware Request and Invoice.
+23. Hardware Buying yields Denial Email, Financial Resource Set, Form, Hardware, Offer, Order, and Price Email.
+# SD1
+1. Hardware Buying from SD zooms in SD1 into Request Analysing, Denial Email Sending, Request Editing, Price Email Sending, Offer Sending, Form Filling, Management Deciding, Offer Forwarding, parallel Order Preparing and Resource Finding, Order Accepting, Hardware Receiving, and Invoice Handling, which occur in that time sequence.
+2. It Department is a physical and systemic object.
+3. Hardware Request is an informatical and systemic object.
+4. Hardware Request can be approved, completed, denied or received.
+5. State received is initial.
+6. Denial Email is an informatical and systemic object.
+7. Price Email is an informatical and systemic object.
+8. Supplier is a physical and environmental object.
+9. Offer is an informatical and environmental object.
+10. Form is an informatical and systemic object.
+11. Form can be approved, denied, filled or rework.
+12. State filled is initial.
+13. Management is a physical and systemic object.
+14. Order is an informatical and systemic object.
+15. Order can be accepted or sent.
+16. State sent is initial.
+17. Financial Department is a physical and systemic object.
+18. Financial Resource Set is an informatical and systemic object.
+19. Hardware is a physical and systemic object.
+20. Invoice is an informatical and environmental object.
+21. Hardware Buying is a physical and systemic process.
+22. Request Analysing is an informatical and systemic process.
+23. It Department handles Request Analysing.
+24. Denial Email Sending is an informatical and systemic process.
+25. Denial Email Sending occurs if Hardware Request is at state denied, otherwise Denial Email Sending is skipped.
+26. Denial Email Sending yields Denial Email.
+27. Request Editing is an informatical and systemic process.
+28. Request Editing occurs if Hardware Request is approved, in which case Request Editing changes Hardware Request from approved to completed, otherwise Request Editing is skipped.
+29. It Department handles Request Editing.
+30. Price Email Sending is an informatical and systemic process.
+31. It Department handles Price Email Sending.
+32. Price Email Sending yields Price Email.
+33. Offer Sending is an informatical and environmental process.
+34. Supplier handles Offer Sending.
+35. Offer Sending requires Price Email.
+36. Offer Sending yields Offer.
+37. Form Filling is an informatical and systemic process.
+38. It Department handles Form Filling.
+39. Offer initiates Form Filling, which requires Offer.
+40. Form Filling yields Form.
+41. Management Deciding is an informatical and systemic process.
+42. Management handles Management Deciding.
+43. Management Deciding requires Hardware Request.
+44. Offer Forwarding is an informatical and systemic process.
+45. Offer Forwarding occurs if Form is at state approved, otherwise Offer Forwarding is skipped.
+46. Offer Forwarding affects Offer.
+47. Order Preparing is an informatical and systemic process.
+48. It Department handles Order Preparing.
+49. Order Preparing yields Order.
+50. Resource Finding is an informatical and systemic process.
+51. Financial Department handles Resource Finding.
+52. Resource Finding yields Financial Resource Set.
+53. Order Accepting is an informatical and environmental process.
+54. Order Accepting changes Order from sent to accepted.
+55. Supplier handles Order Accepting.
+56. Hardware Receiving is a physical and systemic process.
+57. It Department handles Hardware Receiving.
+58. Hardware Receiving requires Financial Resource Set and Order at state accepted.
+59. Hardware Receiving yields Hardware.
+60. Invoice Handling is an informatical and systemic process.
+61. Financial Department handles Invoice Handling.
+62. Invoice Handling affects Invoice.
+63. Request Analysing changes Hardware Request from received to exactly one of approved or denied.
+64. Management Deciding changes Form from filled to exactly one of approved, denied or rework.

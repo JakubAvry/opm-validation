@@ -1,0 +1,190 @@
+# Valid OPL sentences in the forms of ISO 19450:2024 (own names, no text copied from the norm).
+# Format: <expected dialect><TAB><expected sentence kind><TAB><catalogue ids><TAB><sentence>
+#   dialect: iso | annex_a | opcloud | figure (a form found only in an example of the norm, N-061); kind: the grammar rule (alias) of the sentence, below a path label;
+#   catalogue ids: the entries of katalog/pravidla.yaml (check.by = grammar) whose form the sentence shows, or "-".
+# testy/test_gramatika.py reads every sentence and checks dialect and kind; katalog/tvary.py counts a grammar entry
+# as implemented when a sentence here (or a case of vety_neplatne.txt) shows it.
+# 7.3.3, 7.3.4 generic properties (Figure 4 form and short forms of Figures 11, 12); names (7.1.2, 7.2.2)
+iso	generic_property	OPM-7-004, OPM-7-008	Pump is physical.
+iso	generic_property	-	Inspecting is environmental and physical.
+iso	generic_property	-	Valve Group is a physical and systemic object.
+iso	generic_property	-	Monitoring is an informatical and systemic process.
+# 7.3.5, 14.2.1.1, A.4.4.4 states (N-010, N-046)
+iso	state_enum	OPM-7-021	Report can be draft, approved, or archived.
+iso	state_enum	-	Report can be draft or final.
+iso	state_enum_open	OPM-14-017	Report can be draft, final, or other states.
+annex_a	ax_combined_state	-	Report is initially draft and finally archived.
+iso	state_mark	-	State draft of Report is initial.
+iso	state_mark	-	State archived of Report is final.
+iso	state_mark	-	State approved of Report is default.
+iso	states_mark	-	States draft and approved of Report are initial.
+iso	single_state	-	Lamp is lit.
+iso	state_enum	-	Museum Guest can be inside the hall or out of the hall.
+# 9.1 transforming links; 8.1.1 procedural sentences
+iso	consumption	OPM-9-006, OPM-9-002, OPM-8-001	Printing consumes Paper.
+iso	result	OPM-9-014, OPM-9-002	Printing yields Page.
+iso	effect	OPM-9-020, OPM-9-002	Printing affects Printer.
+iso	consumption	OPM-9-006	Printing consumes Paper, Toner, and Staple.
+# 9.3 state-specified transforming links
+iso	consumption	OPM-9-040	Printing consumes blank Paper.
+iso	result	OPM-9-047	Printing yields printed Page.
+iso	change	OPM-9-058	Printing changes Paper from blank to printed.
+iso	change	OPM-9-063	Printing changes Paper from blank.
+iso	change	OPM-9-068	Printing changes Paper to printed.
+iso	change	OPM-9-058	Printing changes Paper from blank to printed, Toner from full to low, and Drum from cold to hot.
+iso	change	-	Packing changes Box from worn out to sealed.
+# 9.2, 9.4 enabling links (a state at the start of a sentence is capitalised, 9.4.1 NOTE; read in rdf.py)
+iso	agent	OPM-9-031, OPM-9-024	Operator handles Printing.
+iso	agent	OPM-9-031	Operator and Technician handle Printing.
+figure	fig_agent_procs	OPM-9-031	Operator handles Printing and Copying.
+iso	agent	OPM-9-072	Ready Operator handles Printing.
+iso	instrument	OPM-9-035, OPM-9-024	Printing requires Printer.
+iso	instrument	OPM-9-076	Printing requires ready Printer.
+iso	instrument	-	Printing requires Printer and Network.
+# 9.5.2 event links
+iso	event_consumption	OPM-9-092	Paper initiates Printing, which consumes Paper.
+iso	event_consumption	OPM-9-106	Blank Paper initiates Printing, which consumes Paper.
+iso	event_effect	OPM-9-096	Paper initiates Printing, which affects Paper.
+iso	event_change	OPM-9-109	Blank Paper initiates Printing, which changes Paper from blank to printed.
+iso	event_change	OPM-9-112	Blank Paper initiates Printing, which changes Paper from blank.
+iso	event_change_any	OPM-9-115	Paper in any state initiates Printing, which changes Paper to printed.
+iso	event_agent	OPM-9-099	Operator initiates and handles Printing.
+iso	event_agent	OPM-9-118	Ready Operator initiates and handles Printing.
+iso	event_instrument	OPM-9-102	Printer initiates Printing, which requires Printer.
+iso	event_instrument	OPM-9-121	Ready Printer initiates Printing, which requires ready Printer.
+# 9.5.2.5 invocation
+iso	invocation	OPM-9-125	Printing invokes Binding.
+iso	invocation	OPM-9-129	Printing invokes itself.
+# 9.5.3 condition links, both forms of each (N-017, N-018)
+iso	cond_occurs	OPM-9-132	Printing occurs if Paper exists, in which case Paper is consumed, otherwise Printing is skipped.
+iso	cond_if	OPM-9-132	If Paper exists then Printing occurs and consumes Paper, otherwise bypass Printing.
+iso	cond_occurs	OPM-9-135	Printing occurs if Paper exists, in which case Printing affects Paper, otherwise Printing is skipped.
+iso	cond_if	OPM-9-135	If Paper exists then Printing occurs and affects Paper, otherwise bypass Printing.
+iso	cond_agent	OPM-9-138	Operator handles Printing if Operator exists, else Printing is skipped.
+iso	cond_if	OPM-9-138	If Operator exists then Operator handles Printing, otherwise bypass Printing.
+iso	cond_occurs	OPM-9-141	Printing occurs if Printer exists, else Printing is skipped.
+iso	cond_if	OPM-9-141	If Printer exists then Printing occurs, otherwise bypass Printing.
+iso	cond_occurs	OPM-9-144	Printing occurs if Paper is blank, in which case Paper is consumed, otherwise Printing is skipped.
+iso	cond_if	OPM-9-144	If blank Paper exists then Printing occurs and consumes Paper, otherwise bypass Printing.
+iso	cond_occurs	OPM-9-147	Printing occurs if Paper is blank, in which case Printing changes Paper from blank to printed, otherwise Printing is skipped.
+iso	cond_if	OPM-9-147	If blank Paper then Printing changes Paper from blank to printed, otherwise bypass Printing.
+annex_a	ax_cond_there_is	-	Printing occurs if there is blank Paper, in which case Printing changes Paper from blank to printed, else Printing is skipped.
+iso	cond_occurs	OPM-9-151	Printing occurs if Paper is blank, in which case Printing changes Paper from blank, otherwise Printing is skipped.
+iso	cond_if	OPM-9-151	If blank Paper then Printing changes Paper from blank, otherwise bypass Printing.
+iso	cond_occurs	OPM-9-154	Printing occurs if Paper exists, in which case Printing changes Paper to printed, otherwise Printing is skipped.
+iso	cond_if	OPM-9-154	If Paper exists then Printing changes Paper to printed, otherwise bypass Printing.
+iso	cond_agent	OPM-9-157	Operator handles Printing if Operator is ready, else Printing is skipped.
+iso	cond_if	OPM-9-157	If ready Operator exists then Operator handles Printing, otherwise bypass Printing.
+iso	cond_occurs	OPM-9-160	Printing occurs if Printer is ready, otherwise Printing is skipped.
+iso	cond_if	OPM-9-160	If ready Printer then Printing occurs, otherwise bypass Printing.
+# 9.5.4 exceptions
+iso	exception	OPM-9-165	Repairing occurs if duration of Printing exceeds 5 min.
+iso	exception	OPM-9-168	Repairing occurs if duration of Printing falls short of 1 min.
+# 11 multiplicity and constraints (11.1, 11.2, Figures 32-34 forms; a parameter is one lower-case letter)
+iso	aggregation	OPM-11-004	Printer consists of 2 Trays and Drum.
+iso	aggregation	OPM-11-009	Printer consists of an optional Stapler.
+iso	aggregation	OPM-11-010	Printer consists of optional Trays.
+iso	aggregation	OPM-11-011	Printer consists of at least one Tray.
+iso	aggregation	-	Printer consists of 2 to 4 Trays.
+iso	aggregation	OPM-11-007	Printer consists of 2 through 4 Trays.
+iso	aggregation	OPM-11-008	Printer consists of 1 to 2 or 4 to 5 Trays.
+iso	tagged_uni	OPM-11-012, OPM-11-016	Hub serves 2 or 3*n Printers, where n<=4.
+iso	aggregation	OPM-11-016	Printer consists of Drum and e Trays, where e >= 1, e = f+2*r.
+iso	tagged_uni	OPM-11-016	f Trays are fixed to Drum, where f in {0, 2}.
+iso	tagged_uni	OPM-11-016	r Trays are fixed to Frame, where 0 <= r <= 3.
+iso	agent	OPM-11-004	k=2 to 4 Operators handle Printing.
+iso	agent	OPM-11-009	An optional Technician handles Printing.
+iso	agent	OPM-11-011	At least one Operator handles Printing.
+iso	agent	OPM-11-010	Optional Helpers handle Printing.
+iso	agent	-	Two to four Helpers handle Printing.
+iso	instrument	OPM-11-012	Printing requires k Toner Cartridges.
+iso	consumption	OPM-11-012	Printing consumes i blank Sheets and b – i used Sheets.
+iso	result	OPM-11-012	Printing yields a <= b printed Sheets.
+iso	result	OPM-11-010	Ordering yields many new Sheets.
+iso	attribute_value	OPM-11-020, OPM-11-021, OPM-10-051, OPM-10-052	Speed of Printer is fast.
+iso	attribute_range	OPM-11-022, OPM-7-026	Speed in ppm of Printer ranges from 10 to 40.
+iso	attribute_range_clause	OPM-11-022	Speed in ppm of Printer range is 10 to 40.
+iso	attribute_value	OPM-7-026	Temperature in degrees Celsius of Water is 40.
+iso	state_enum	-	Speed of Printer can be slow or fast.
+# 12 logical operators: XOR, OR, control-modified fans (Tables 22, 23), probabilistic fans
+iso	consumption	OPM-12-012	Printing consumes at least one of Paper, Film, or Card.
+iso	consumption	OPM-12-009	Printing consumes exactly one of Paper, Film, or Card.
+iso	consumption	OPM-12-012	At least one of Printing or Copying consumes Paper.
+iso	consumption	OPM-12-009	Exactly one of Printing, Copying, or Scanning consumes Paper.
+iso	result	OPM-12-009	Printing yields exactly one of Page or Error Report.
+iso	result	OPM-12-009	Printing yields exactly one of Page and Error Report.
+iso	agent	OPM-12-009	Operator handles exactly one of Printing or Copying.
+iso	agent	OPM-12-009	Exactly one of Operator and Technician handles Printing.
+iso	instrument	OPM-12-012	Printing requires at least one of Printer or Plotter.
+iso	invocation	OPM-12-009	Printing invokes exactly one of Binding or Stapling.
+iso	change	OPM-12-009	Printing changes Paper from blank to exactly one of printed or spoiled.
+iso	event_fan	OPM-12-019	Paper initiates exactly one of Printing, Copying, or Scanning, which affects the occurring process.
+iso	event_fan	OPM-12-019	Paper initiates at least one of Printing or Copying, which affects the occurring process.
+iso	event_fan	OPM-12-019	Blank Paper initiates exactly one of Printing or Copying, which consumes the initiated process.
+iso	event_fan	OPM-12-019	Ready Printer initiates exactly one of Printing or Copying, which requires ready Printer.
+iso	event_agent_fan	OPM-12-019	Operator initiates and handles exactly one of Printing or Copying.
+iso	cond_fan	OPM-12-019	Exactly one of Printing or Copying occurs if Paper exists, in which case the occurring process affects Paper, otherwise these processes are skipped.
+iso	cond_fan	OPM-12-019	At least one of Printing or Copying occurs if Paper is blank, in which case the occurring process consumes Paper, otherwise these processes are skipped.
+iso	cond_agent_fan	OPM-12-019	Operator handles exactly one of Printing or Copying if Operator is ready, otherwise these processes are skipped.
+iso	cond_requires_fan	OPM-12-019	Exactly one of Printing or Copying requires that Printer is ready, otherwise these processes are skipped.
+iso	probabilistic	OPM-12-025	Printing yields Page with probability 0,7 or Error Report with probability 0,3.
+iso	probabilistic	OPM-12-025	Printing yields blank Page with probability 0,2, printed Page with probability 0,5, or torn Page with probability 0,3.
+iso	probabilistic	OPM-12-025	Printing with probability 0,6 or Copying with probability 0,4 consumes Paper.
+# 13 path labels
+iso	consumption	OPM-13-003	Following path color, Printing consumes Color Toner.
+# 10 structural links: fundamental relations (Table 14 gives one direction only), tagged links
+iso	aggregation	OPM-10-029, OPM-10-021, OPM-10-002, OPM-10-026	Printer consists of Tray, Drum, and Fuser.
+iso	aggregation	OPM-10-029	Printer consists of Tray and Drum.
+iso	aggregation	OPM-10-032	Printer consists of Tray, Drum, and at least one other part.
+iso	exhibition	OPM-10-041, OPM-10-021	Printer exhibits Speed.
+iso	exhibition	OPM-10-041	Printer exhibits Speed and Resolution, as well as Printing.
+iso	exhibition	OPM-10-042	Printing exhibits Duration.
+iso	exhibition	OPM-10-042	Printing exhibits Feeding, as well as Duration and Cost.
+iso	exhibition	OPM-10-044	Printer exhibits Speed, and at least one other attribute.
+iso	exhibition	OPM-10-044	Printer exhibits Speed, and at least one other attribute, as well as Printing, and at least another operation.
+iso	exhibition	OPM-10-045	Printing exhibits Feeding, and at least another operation, as well as Duration, and at least one other attribute.
+iso	gen_single	OPM-10-055, OPM-10-021	Laser Printer is a Printer.
+iso	gen_many	OPM-10-055	Laser Printer and Inkjet Printer are Printers.
+iso	gen_partial	OPM-10-059	Laser Printer, Inkjet Printer, and other specializations are Printers.
+iso	gen_single_process	OPM-10-056	Color Printing is Printing.
+iso	gen_many	OPM-10-056	Color Printing and Draft Printing are Printing.
+iso	gen_partial	OPM-10-060	Color Printing, Draft Printing, and other specializations are Printing.
+iso	instantiation	OPM-10-072, OPM-10-021	Office Printer is an instance of Printer.
+iso	instantiation	OPM-10-073	Monday Printing is an instance of Printing.
+iso	instantiation	OPM-10-074	Office Printer and Lab Printer are instances of Printer.
+iso	instantiation	OPM-10-075	Monday Printing and Friday Printing are instances of Printing.
+iso	state_characterization	OPM-10-087	Laser Printer exhibits fast Speed.
+iso	tagged_uni	OPM-10-007, OPM-10-004, OPM-10-002, OPM-10-014	Printer serves Office.
+iso	tagged_uni	OPM-10-014	Office hosts Printer.
+iso	tagged_null	OPM-10-009, OPM-10-010, OPM-10-089	Printer relates to Office.
+iso	reciprocal	OPM-10-018	Printer and Scanner are connected.
+iso	reciprocal_null	OPM-10-017, OPM-10-019, OPM-10-111	Printer and Scanner are related.
+iso	tagged_uni	OPM-10-097, OPM-10-104	Office uses ready Printer.
+iso	tagged_uni	OPM-10-094, OPM-10-104	Ready Printer serves Office.
+iso	tagged_uni	OPM-10-100, OPM-10-108	Ready Printer serves open Office.
+iso	reciprocal	OPM-10-113	Ready Printer and Scanner are connected.
+iso	reciprocal	OPM-10-113	Printer and ready Scanner are connected.
+iso	reciprocal	OPM-10-118	Ready Printer and ready Scanner are connected.
+iso	reciprocal_null	OPM-10-119, OPM-10-116	Ready Printer and ready Scanner are related.
+# 14 context management
+iso	zoom	OPM-14-035, OPM-14-046	Printing zooms into Feeding, Imaging, and Fusing, in that sequence.
+iso	zoom	OPM-14-048	Printing zooms into parallel Feeding and Warming.
+iso	zoom	OPM-14-048	Printing zooms into Feeding, parallel Imaging and Cooling, and Fusing, in that sequence.
+iso	zoom	OPM-14-041	Printer zooms into Tray, Drum, and Fuser, in that sequence.
+iso	unfold	OPM-14-030	Printer unfolds into Tray and Drum.
+iso	refinement	OPM-14-072	SD is refined by in-zooming Printing in SD1.
+iso	refinement	OPM-14-073	SD1 is refined by unfolding Printer in SD2.
+annex_a	ax_zoom_new_diagram	-	Printing from SD zooms in SD1 into Feeding and Fusing in that sequence.
+iso	unfold_new_diagram	OPM-14-030	Printer from SD part-unfolds in SD1 into Tray and Drum.
+# OPCloud forms (profile OPCloud; in the ISO profile reported as W)
+opcloud	state_sentence	-	State draft is initial.
+opcloud	consumption	-	Printing consumes Paper at state blank.
+opcloud	agent	-	Operator at state ready handles Printing.
+opcloud	cond_occurs	-	Printing occurs if Printer is at state ready, otherwise Printing is skipped.
+opcloud	zoom	-	Printing from SD zooms in SD1 into Feeding and Fusing, which occur in that time sequence.
+opcloud	exception	-	Repairing occurs if Printing lasts more than 5 min.
+opcloud	opc_duration	-	The maximal duration of Printing is 5 min.
+opcloud	opc_reciprocal_null	-	Printer and Scanner are equivalent.
+opcloud	change	-	Printing changes Paper from blank to any other state.
+opcloud	cond_occurs	-	Printing occurs if Paper does not exist, otherwise Printing is skipped.
+opcloud	opc_stateful	-	Report is stateful.

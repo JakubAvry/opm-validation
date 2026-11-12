@@ -1,0 +1,61 @@
+# SD
+1. Supervisor is a physical and systemic object.
+2. Amount of Expense Report is an informatical and systemic object.
+3. Amount of Expense Report can be over 200 or under 200.
+4. Bank Account is an informatical and environmental object.
+5. Expense Report is an informatical and systemic object.
+6. Expense Report can be approved, received, rejected or reviewed.
+7. State received is initial.
+8. Account is an informatical and systemic object.
+9. Approval Progress Email is an informatical and systemic object.
+10. Reimbursement is an informatical and systemic object.
+11. Rejection Notice is an informatical and systemic object.
+12. Cancellation Notice is an informatical and systemic object.
+13. Expense Report Handling is an informatical and systemic process.
+14. The maximal duration of Expense Report Handling is 30 d.
+15. Supervisor handles Expense Report Handling.
+16. Expense Report Handling requires Amount of Expense Report.
+17. Expense Report Handling affects Bank Account and Expense Report.
+18. Expense Report Handling yields Account, Approval Progress Email, Reimbursement, and Rejection Notice.
+19. Expense Report Cancelling is an informatical and systemic process.
+20. Expense Report Cancelling yields Cancellation Notice.
+21. Expense Report Cancelling occurs if Expense Report Handling lasts more than 30 d.
+# SD1
+1. Expense Report Handling from SD zooms in SD1 into Account Creating, Expense Report Reviewing, Automatic Approving, Supervisor Approving, Approval Progress Email Sending, Rejection Notice Sending, and Reimbursing, which occur in that time sequence.
+2. Account is an informatical and systemic object.
+3. Amount of Expense Report is an informatical and systemic object.
+4. Amount of Expense Report can be over 200 or under 200.
+5. Expense Report is an informatical and systemic object.
+6. Expense Report can be approved, received, rejected or reviewed.
+7. State received is initial.
+8. Supervisor is a physical and systemic object.
+9. Approval Progress Email is an informatical and systemic object.
+10. Rejection Notice is an informatical and systemic object.
+11. Bank Account is an informatical and environmental object.
+12. Reimbursement is an informatical and systemic object.
+13. Expense Report exhibits Amount.
+14. Expense Report Handling is an informatical and systemic process.
+15. The maximal duration of Expense Report Handling is 30 d.
+16. Account Creating is an informatical and systemic process.
+17. Account Creating yields Account.
+18. Expense Report Reviewing is an informatical and systemic process.
+19. Expense Report Reviewing changes Expense Report from received to reviewed.
+20. Expense Report Reviewing requires Amount of Expense Report.
+21. Automatic Approving is an informatical and systemic process.
+22. Automatic Approving changes Expense Report from reviewed to approved.
+23. Automatic Approving occurs if Amount of Expense Report is at state under 200, otherwise Automatic Approving is skipped.
+24. Supervisor Approving is an informatical and systemic process.
+25. The maximal duration of Supervisor Approving is 7 d.
+26. Supervisor handles Supervisor Approving.
+27. Supervisor Approving occurs if Amount of Expense Report is at state over 200, otherwise Supervisor Approving is skipped.
+28. Approval Progress Email Sending is an informatical and systemic process.
+29. Approval Progress Email Sending yields Approval Progress Email.
+30. Approval Progress Email Sending occurs if Supervisor Approving lasts more than 7 d.
+31. Rejection Notice Sending is an informatical and systemic process.
+32. Rejection Notice Sending occurs if Expense Report is at state rejected, otherwise Rejection Notice Sending is skipped.
+33. Rejection Notice Sending yields Rejection Notice.
+34. Reimbursing is an informatical and systemic process.
+35. Reimbursing occurs if Expense Report is at state approved, otherwise Reimbursing is skipped.
+36. Reimbursing affects Bank Account.
+37. Reimbursing yields Reimbursement.
+38. Supervisor Approving changes Expense Report from reviewed to exactly one of approved or rejected.

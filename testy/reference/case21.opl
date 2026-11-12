@@ -1,0 +1,60 @@
+# SD
+1. Accounts Receivable Department is a physical and systemic object.
+2. Payment Office is a physical and systemic object.
+3. Registry Office is a physical and systemic object.
+4. Paper-based Invoice Set is a physical and systemic object.
+5. Paper-based Invoice Set can be archived, paid or selected.
+6. State paid is initial.
+7. Charge is an informatical and systemic object.
+8. Monthly Invoice is an informatical and systemic object.
+9. Payment is an informatical and systemic object.
+10. Payment Report is an informatical and systemic object.
+11. Payment Report can be generated or sent.
+12. State generated is initial.
+13. Vendor Payment Handling is a physical and systemic process.
+14. Accounts Receivable Department, Payment Office, and Registry Office handle Vendor Payment Handling.
+15. Vendor Payment Handling affects Paper-based Invoice Set.
+16. Vendor Payment Handling yields Charge, Monthly Invoice, Payment, and Payment Report.
+# SD1
+1. Vendor Payment Handling from SD zooms in SD1 into Payment Report Generating, Vendor Paying, Payment Report Sending, Monthly Invoice Generating, Client Charging, Paid Invoice Selecting, Invoice Archiving, and Payment Tracking, which occur in that time sequence.
+2. Payment Invoice is an informatical and systemic object.
+3. Payment Office is a physical and systemic object.
+4. Payment Report is an informatical and systemic object.
+5. Payment Report can be generated or sent.
+6. State generated is initial.
+7. Payment is an informatical and systemic object.
+8. Accounts Receivable Department is a physical and systemic object.
+9. Monthly Invoice is an informatical and systemic object.
+10. Charge is an informatical and systemic object.
+11. Registry Office is a physical and systemic object.
+12. Paper-based Invoice Set is a physical and systemic object.
+13. Paper-based Invoice Set can be archived, paid or selected.
+14. State paid is initial.
+15. Payment Report consists of Payment Invoice.
+16. Vendor Payment Handling is a physical and systemic process.
+17. Payment Report Generating is an informatical and systemic process.
+18. Payment Office handles Payment Report Generating.
+19. Payment Report Generating yields Payment Report.
+20. Vendor Paying is an informatical and systemic process.
+21. Payment Office handles Vendor Paying.
+22. Vendor Paying yields Payment.
+23. Payment Report Sending is an informatical and systemic process.
+24. Payment Report Sending changes Payment Report from generated to sent.
+25. Payment Office handles Payment Report Sending.
+26. Monthly Invoice Generating is an informatical and systemic process.
+27. Accounts Receivable Department handles Monthly Invoice Generating.
+28. Monthly Invoice Generating requires Payment Report.
+29. Monthly Invoice Generating yields Monthly Invoice.
+30. Client Charging is an informatical and systemic process.
+31. Accounts Receivable Department handles Client Charging.
+32. Client Charging requires Monthly Invoice.
+33. Client Charging yields Charge.
+34. Paid Invoice Selecting is a physical and systemic process.
+35. Paid Invoice Selecting changes Paper-based Invoice Set from paid to selected.
+36. Registry Office handles Paid Invoice Selecting.
+37. Invoice Archiving is a physical and systemic process.
+38. Invoice Archiving changes Paper-based Invoice Set from selected to archived.
+39. Registry Office handles Invoice Archiving.
+40. Payment Tracking is an informatical and systemic process.
+41. Registry Office handles Payment Tracking.
+42. Payment Tracking affects Payment.

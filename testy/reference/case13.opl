@@ -1,0 +1,86 @@
+# SD
+1. Assistant Registry Manager is a physical and systemic object.
+2. Cashier is a physical and systemic object.
+3. Mail Clerk is a physical and systemic object.
+4. Mail Processing Unit is a physical and systemic object.
+5. Registry is a physical and systemic object.
+6. Fee is a physical and systemic object.
+7. Mail is a physical and systemic object.
+8. Mail can be collected, compliant, distributed, non-compliant, posted, registered or sorted.
+9. State posted is initial.
+10. Mail Register is a physical and systemic object.
+11. Envelope is a physical and systemic object.
+12. Matter Details is an informatical and systemic object.
+13. Party Details is an informatical and systemic object.
+14. Physical Court File is a physical and systemic object.
+15. Receipt is a physical and systemic object.
+16. Requisition List is an informatical and systemic object.
+17. Requisition List can be compiled or sent.
+18. State compiled is initial.
+19. Mail Handling is a physical and systemic process.
+20. Assistant Registry Manager, Cashier, Mail Clerk, Mail Processing Unit, and Registry handle Mail Handling.
+21. Mail Handling affects Mail and Mail Register.
+22. Mail Handling consumes Fee.
+23. Mail Handling yields Envelope, Matter Details, Party Details, Physical Court File, Receipt, and Requisition List.
+# SD1
+1. Mail Handling from SD zooms in SD1 into Mail Collecting, Mail Sorting, Mail Distributing, Mail Registering, Quality Checking, Requisition List Compiling, Requisition List Sending, Matter Details Capturing, Fee Taking, parallel Envelope Posting and Party Details Capturing, and Court File Printing, which occur in that time sequence.
+2. Copied Document Set is a physical and systemic object.
+3. Mail Processing Unit is a physical and systemic object.
+4. Mail is a physical and systemic object.
+5. Mail can be collected, compliant, distributed, non-compliant, posted, registered or sorted.
+6. State posted is initial.
+7. Mail Clerk is a physical and systemic object.
+8. Registry is a physical and systemic object.
+9. Mail Register is a physical and systemic object.
+10. Assistant Registry Manager is a physical and systemic object.
+11. Requisition List is an informatical and systemic object.
+12. Requisition List can be compiled or sent.
+13. State compiled is initial.
+14. Matter Details is an informatical and systemic object.
+15. Cashier is a physical and systemic object.
+16. Fee is a physical and systemic object.
+17. Receipt is a physical and systemic object.
+18. Envelope is a physical and systemic object.
+19. Party Details is an informatical and systemic object.
+20. Physical Court File is a physical and systemic object.
+21. Mail Processing Unit consists of Mail Clerk.
+22. Registry consists of Assistant Registry Manager.
+23. Envelope consists of Copied Document Set and Receipt.
+24. Mail Handling is a physical and systemic process.
+25. Mail Collecting is a physical and systemic process.
+26. Mail Collecting changes Mail from posted to collected.
+27. Mail Processing Unit handles Mail Collecting.
+28. Mail Sorting is a physical and systemic process.
+29. Mail Sorting changes Mail from collected to sorted.
+30. Mail Clerk handles Mail Sorting.
+31. Mail Distributing is a physical and systemic process.
+32. Mail Distributing changes Mail from sorted to distributed.
+33. Mail Registering is a physical and systemic process.
+34. Mail Registering changes Mail from distributed to registered.
+35. Registry handles Mail Registering.
+36. Mail Registering affects Mail Register.
+37. Quality Checking is a physical and systemic process.
+38. Assistant Registry Manager handles Quality Checking.
+39. Requisition List Compiling is an informatical and systemic process.
+40. Requisition List Compiling occurs if Mail is at state non-compliant, otherwise Requisition List Compiling is skipped.
+41. Requisition List Compiling yields Requisition List.
+42. Requisition List Sending is an informatical and systemic process.
+43. Requisition List Sending changes Requisition List from compiled to sent.
+44. Matter Details Capturing is an informatical and systemic process.
+45. Matter Details Capturing occurs if Mail is at state compliant, otherwise Matter Details Capturing is skipped.
+46. Matter Details Capturing yields Matter Details.
+47. Fee Taking is a physical and systemic process.
+48. Cashier handles Fee Taking.
+49. Fee Taking requires Matter Details.
+50. Fee Taking consumes Fee.
+51. Fee Taking yields Receipt.
+52. Envelope Posting is a physical and systemic process.
+53. Assistant Registry Manager handles Envelope Posting.
+54. Envelope Posting yields Envelope.
+55. Party Details Capturing is an informatical and systemic process.
+56. Cashier handles Party Details Capturing.
+57. Party Details Capturing yields Party Details.
+58. Court File Printing is a physical and systemic process.
+59. Cashier handles Court File Printing.
+60. Court File Printing yields Physical Court File.
+61. Quality Checking changes Mail from registered to exactly one of compliant or non-compliant.

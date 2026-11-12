@@ -1,0 +1,104 @@
+# SD
+1. Accounting Employee is a physical and systemic object.
+2. Board is a physical and systemic object.
+3. Commercial Manager is a physical and systemic object.
+4. Cost Center Manager is a physical and systemic object.
+5. Secretariat is a physical and systemic object.
+6. Supplier is a physical and environmental object.
+7. Acme Financial Accounting is an informatical and systemic object.
+8. Central Inbox is a physical and systemic object.
+9. Internal Mail is a physical and systemic object.
+10. Signature File is a physical and systemic object.
+11. Invoice is a physical and systemic object.
+12. Invoice can be inspected or received.
+13. State received is initial.
+14. Invoice Copy is a physical and systemic object.
+15. Board Approval is an informatical and systemic object.
+16. Docket is a physical and systemic object.
+17. Docket can be accurate, prepared, rejected or sent.
+18. State prepared is initial.
+19. Invoice Instance is an informatical and systemic object.
+20. Invoice Instance can be closed or open.
+21. State open is initial.
+22. Payment Approval is an informatical and systemic object.
+23. Payment Instruction is an informatical and systemic object.
+24. Invoice Handling is a physical and systemic process.
+25. Accounting Employee, Board, Commercial Manager, Cost Center Manager, Secretariat, and Supplier handle Invoice Handling.
+26. Invoice Handling requires Acme Financial Accounting, Central Inbox, Internal Mail, and Signature File.
+27. Invoice Handling affects Invoice and Invoice Copy.
+28. Invoice Handling yields Board Approval, Docket, Invoice Instance, Payment Approval, and Payment Instruction.
+# SD1
+1. Invoice Handling from SD zooms in SD1 into Invoice Inspecting, Invoice Instance Creating, Docket Preparing, Docket Sending, Position Reviewing, Inconsistency Clarifying, Commercial Auditing, Board Checking, Invoice Copy Returning, Complaint Resolving, Payment Instructing, and Instance Closing, which occur in that time sequence, as well as Complaint.
+2. Secretariat is a physical and systemic object.
+3. Central Inbox is a physical and systemic object.
+4. Invoice is a physical and systemic object.
+5. Invoice can be inspected or received.
+6. State received is initial.
+7. Accounting Employee is a physical and systemic object.
+8. Acme Financial Accounting is an informatical and systemic object.
+9. Invoice Instance is an informatical and systemic object.
+10. Invoice Instance can be closed or open.
+11. State open is initial.
+12. Docket is a physical and systemic object.
+13. Docket can be accurate, prepared, rejected or sent.
+14. State prepared is initial.
+15. Internal Mail is a physical and systemic object.
+16. Cost Center Manager is a physical and systemic object.
+17. Invoice Copy is a physical and systemic object.
+18. Supplier is a physical and environmental object.
+19. Commercial Manager is a physical and systemic object.
+20. Payment Approval is an informatical and systemic object.
+21. Board is a physical and systemic object.
+22. Amount of Invoice is an informatical and systemic object.
+23. Amount of Invoice can be high or low.
+24. Board Approval is an informatical and systemic object.
+25. Signature File is a physical and systemic object.
+26. Payment Instruction is an informatical and systemic object.
+27. Complaint is an informatical and systemic object.
+28. Invoice exhibits Amount.
+29. Invoice Handling is a physical and systemic process.
+30. Invoice Inspecting is a physical and systemic process.
+31. Invoice Inspecting changes Invoice from received to inspected.
+32. Secretariat handles Invoice Inspecting.
+33. Invoice Inspecting requires Central Inbox.
+34. Invoice Instance Creating is an informatical and systemic process.
+35. Accounting Employee handles Invoice Instance Creating.
+36. Invoice Instance Creating requires Acme Financial Accounting and Invoice.
+37. Invoice Instance Creating yields Invoice Instance.
+38. Docket Preparing is a physical and systemic process.
+39. Accounting Employee handles Docket Preparing.
+40. Docket Preparing requires Invoice.
+41. Docket Preparing yields Docket.
+42. Docket Sending is a physical and systemic process.
+43. Docket Sending changes Docket from prepared to sent.
+44. Docket Sending requires Internal Mail.
+45. Position Reviewing is a physical and systemic process.
+46. Cost Center Manager handles Position Reviewing.
+47. Position Reviewing requires Invoice Copy.
+48. Inconsistency Clarifying is a physical and systemic process.
+49. Inconsistency Clarifying occurs if Docket is rejected, in which case Inconsistency Clarifying changes Docket from rejected to sent, otherwise Inconsistency Clarifying is skipped.
+50. Accounting Employee and Supplier handle Inconsistency Clarifying.
+51. Commercial Auditing is an informatical and systemic process.
+52. Commercial Manager handles Commercial Auditing.
+53. Commercial Auditing requires Invoice Copy.
+54. Commercial Auditing occurs if Docket is at state accurate, otherwise Commercial Auditing is skipped.
+55. Board Checking is an informatical and systemic process.
+56. Board handles Board Checking.
+57. Board Checking occurs if Amount of Invoice is at state high, otherwise Board Checking is skipped.
+58. Board Checking yields Board Approval.
+59. Invoice Copy Returning is a physical and systemic process.
+60. Invoice Copy Returning requires Signature File.
+61. Invoice Copy Returning affects Invoice Copy.
+62. Complaint Resolving is an informatical and systemic process.
+63. Accounting Employee and Supplier handle Complaint Resolving.
+64. Complaint Resolving occurs if Complaint exists, in which case Complaint Resolving consumes Complaint, otherwise Complaint Resolving is skipped.
+65. Payment Instructing is an informatical and systemic process.
+66. Accounting Employee handles Payment Instructing.
+67. Payment Instructing occurs if Payment Approval exists, otherwise Payment Instructing is skipped.
+68. Payment Instructing yields Payment Instruction.
+69. Instance Closing is an informatical and systemic process.
+70. Instance Closing changes Invoice Instance from open to closed.
+71. Accounting Employee handles Instance Closing.
+72. Instance Closing requires Acme Financial Accounting.
+73. Position Reviewing changes Docket from sent to exactly one of accurate or rejected.
+74. Commercial Auditing yields exactly one of Complaint and Payment Approval.

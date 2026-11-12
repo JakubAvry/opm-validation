@@ -1,0 +1,83 @@
+# SD
+1. Chef is a physical and systemic object.
+2. Employee is a physical and systemic object.
+3. Guest is a physical and environmental object.
+4. Meal Range is an informatical and systemic object.
+5. Pos System is an informatical and systemic object.
+6. Service Hatch is a physical and systemic object.
+7. Buzzer is a physical and systemic object.
+8. Money is a physical and environmental object.
+9. Dish is an informatical and systemic object.
+10. Order is an informatical and systemic object.
+11. Order can be entered or placed.
+12. State placed is initial.
+13. Meal Serving is a physical and systemic process.
+14. Chef, Employee, and Guest handle Meal Serving.
+15. Meal Serving requires Meal Range, Pos System, and Service Hatch.
+16. Meal Serving affects Buzzer and Money.
+17. Meal Serving yields Dish and Order.
+# SD1
+1. Meal Serving from SD zooms in SD1 into Dish Choosing, Order Placing, Order Entering, Money Collecting, Buzzer Setting, Chef Informing, Meal Preparing, Meal Placing, Employee Informing, Buzzer Ringing, Meal Handing, Guest Calling, and Meal Eating, which occur in that time sequence, as well as Meal.
+2. Guest is a physical and environmental object.
+3. Meal Range is an informatical and systemic object.
+4. Dish is an informatical and systemic object.
+5. Employee is a physical and systemic object.
+6. Order is an informatical and systemic object.
+7. Order can be entered or placed.
+8. State placed is initial.
+9. Pos System is an informatical and systemic object.
+10. Money is a physical and environmental object.
+11. Buzzer is a physical and systemic object.
+12. Chef is a physical and systemic object.
+13. Service Hatch is a physical and systemic object.
+14. Meal is a physical and systemic object.
+15. Meal can be finished, handed over, placed or ready.
+16. State finished is initial.
+17. Meal Serving is a physical and systemic process.
+18. Dish Choosing is an informatical and environmental process.
+19. Guest handles Dish Choosing.
+20. Dish Choosing requires Meal Range.
+21. Dish Choosing yields Dish.
+22. Order Placing is an informatical and systemic process.
+23. Employee and Guest handle Order Placing.
+24. Order Placing requires Dish.
+25. Order Placing yields Order.
+26. Order Entering is an informatical and systemic process.
+27. Order Entering changes Order from placed to entered.
+28. Employee handles Order Entering.
+29. Order Entering requires Pos System.
+30. Money Collecting is a physical and systemic process.
+31. Employee and Guest handle Money Collecting.
+32. Money Collecting affects Money.
+33. Buzzer Setting is a physical and systemic process.
+34. Employee handles Buzzer Setting.
+35. Buzzer Setting affects Buzzer.
+36. Chef Informing is an informatical and systemic process.
+37. Employee handles Chef Informing.
+38. Chef Informing requires Order at state entered.
+39. Chef Informing affects Chef.
+40. Meal Preparing is a physical and systemic process.
+41. Chef handles Meal Preparing.
+42. Meal Preparing requires Order.
+43. Meal Preparing yields Meal.
+44. Meal Placing is a physical and systemic process.
+45. Meal Placing changes Meal from finished to placed.
+46. Chef handles Meal Placing.
+47. Meal Placing requires Service Hatch.
+48. Employee Informing is an informatical and systemic process.
+49. Employee Informing changes Meal from placed to ready.
+50. Chef handles Employee Informing.
+51. Buzzer Ringing is a physical and systemic process.
+52. Employee handles Buzzer Ringing.
+53. Buzzer Ringing affects Buzzer.
+54. Meal Handing is a physical and systemic process.
+55. The maximal duration of Meal Handing is 5 min.
+56. Meal Handing changes Meal from ready to handed over.
+57. Employee and Guest handle Meal Handing.
+58. Guest Calling is a physical and systemic process.
+59. Employee handles Guest Calling.
+60. Guest Calling affects Guest.
+61. Guest Calling occurs if Meal Handing lasts more than 5 min.
+62. Meal Eating is a physical and environmental process.
+63. Guest handles Meal Eating.
+64. Meal Eating consumes Meal at state handed over.

@@ -1,0 +1,188 @@
+# OPM ontology for validating OPL with SHACL. Classes follow ISO 19450:2024 Annex C (OPM metamodel).
+# The namespace is a placeholder; opmvalid/config.py sets it in one place.
+#
+# Modelling decisions:
+# - every link is its own node (subclass of opm:Link) with its provenance: opm:sentence -> opm:Sentence
+#   (line, column, text) and opm:inOPD -> opm:OPD;
+# - the converter adds direct role properties object -> process (opm:consumedBy, opm:yieldedBy, ...), so that
+#   several rules stay in SHACL Core; inheritance is not materialised (rules that follow it use SHACL-SPARQL).
+
+#
+# Deliberate differences from the OPM model of Annex C (informative, Figures C.1 to C.18):
+# 1. Invocation and exception links are direct subclasses of opm:Link. Annex C (Figure C.8: a process-process
+#    link is a procedural link) and the NOTE of 9.5.4.3 count them among the procedural links. Here
+#    opm:ProceduralLink means a link between an object and a process (ends opm:object and opm:process), which
+#    the shapes for procedural links rely on; the two process-process links have opm:source and opm:target.
+# 2. Direction. Annex C gives every link a source and a destination (Figures C.4, C.16). Procedural links here
+#    have roles instead (opm:object, opm:process); the direction follows from the class (a consumption link runs
+#    from the object to the process, a result link from the process to the object). opm:source / opm:target are
+#    used for structural, invocation and exception links.
+# 3. Classes of Annex C that no rule needs are not modelled: Element (Thing and Link), Stateful / Stateless
+#    Object, State-Specific Object, OPD Construct / Basic Construct, Connector, Linked Thing; Refineable and
+#    Refinee are properties (opm:refines, opm:refinee), not classes.
+# 4. Perseverance (Figure C.9) is not modelled: the kind of a thing (opm:Object, opm:Process) follows from its
+#    positions in the sentences; Essence and Affiliation are.
+# 5. Multiplicity (Figure C.4: lower and upper bound) is kept as written (opm:multiplicity); only a numeric
+#    range gets its bounds (opm:Range).
+# 6. Control links agree with Figure C.14: an event or condition link is the same link with one more type
+#    (opm:EventLink, opm:ConditionLink) and opm:modifier.
+# Every class and property the converter and the shapes use is declared below (testy/test_rdf.py checks it).
+
+@prefix opm:  <https://example.org/opm#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+# --- model, OPDs, sentences (6.2.1, 14.2.2.6)
+opm:Model    a owl:Class ; rdfs:comment "An OPM model read from one OPL text." .
+opm:OPD      a owl:Class ; rdfs:comment "Object-Process Diagram = one OPL paragraph (SD, SD1, ...) [ISO 14.2.2.6]." .
+opm:Sentence a owl:Class ; rdfs:comment "One OPL sentence of the input, with its position." .
+opm:Paragraph a owl:Class ; rdfs:comment "OPD paragraph heading of the input (SD: name), with its position." .
+opm:Defect a owl:Class ; rdfs:comment "Wording defect of one sentence found while reading it (e.g. two different objects in an event sentence); opm:violates = catalogue id, opm:detail = what is wrong." .
+opm:violates a owl:DatatypeProperty ; rdfs:comment "catalogue id of the rule a defect violates" .
+opm:detail a owl:DatatypeProperty ; rdfs:comment "what is wrong, for the report" .
+opm:heads a owl:ObjectProperty ; rdfs:domain opm:Paragraph ; rdfs:range opm:OPD .
+
+# --- things and states (7.1-7.3)
+opm:Thing   a owl:Class ; rdfs:comment "Object or process [ISO 7.3.1]." .
+opm:Object  a owl:Class ; rdfs:subClassOf opm:Thing ; rdfs:comment "Object [ISO 7.1]." .
+opm:Process a owl:Class ; rdfs:subClassOf opm:Thing ; rdfs:comment "Process [ISO 7.2]." .
+opm:State   a owl:Class ; rdfs:comment "State (or attribute value) of an object [ISO 7.3.5, 7.3.5.5]." .
+
+# --- links (8-10)
+opm:Link              a owl:Class ; rdfs:comment "Any link of the model." .
+opm:ProceduralLink    a owl:Class ; rdfs:subClassOf opm:Link ; rdfs:comment "[ISO 8.1]" .
+opm:TransformingLink  a owl:Class ; rdfs:subClassOf opm:ProceduralLink ; rdfs:comment "[ISO 9.1]" .
+opm:ConsumptionLink   a owl:Class ; rdfs:subClassOf opm:TransformingLink ; rdfs:comment "consumes [ISO 9.1.2]" .
+opm:ResultLink        a owl:Class ; rdfs:subClassOf opm:TransformingLink ; rdfs:comment "yields [ISO 9.1.3]" .
+opm:EffectLink        a owl:Class ; rdfs:subClassOf opm:TransformingLink ; rdfs:comment "affects [ISO 9.1.4]" .
+opm:ChangeLink        a owl:Class ; rdfs:subClassOf opm:EffectLink ; rdfs:comment "changes ... from ... to ... [ISO 9.3.3]" .
+opm:EnablingLink      a owl:Class ; rdfs:subClassOf opm:ProceduralLink ; rdfs:comment "[ISO 9.2]" .
+opm:AgentLink         a owl:Class ; rdfs:subClassOf opm:EnablingLink ; rdfs:comment "handles [ISO 9.2.2]" .
+opm:InstrumentLink    a owl:Class ; rdfs:subClassOf opm:EnablingLink ; rdfs:comment "requires [ISO 9.2.3]" .
+opm:EventLink         a owl:Class ; rdfs:comment "Procedural link with the event modifier [ISO 9.5.2]; also typed by its kind." .
+opm:ConditionLink     a owl:Class ; rdfs:comment "Procedural link with the condition modifier [ISO 9.5.3]; also typed by its kind." .
+opm:NegationLink      a owl:Class ; rdfs:comment "Negated condition (does not exist / is not at state) [OPCloud]." .
+opm:InvocationLink    a owl:Class ; rdfs:subClassOf opm:Link ; rdfs:comment "invokes: process to process [ISO 9.5.2.5]" .
+opm:ExceptionLink     a owl:Class ; rdfs:subClassOf opm:Link ; rdfs:comment "overtime / undertime exception [ISO 9.5.4]" .
+opm:StructuralLink    a owl:Class ; rdfs:subClassOf opm:Link ; rdfs:comment "[ISO 10]" .
+opm:FundamentalLink   a owl:Class ; rdfs:subClassOf opm:StructuralLink ; rdfs:comment "[ISO 10.3]" .
+opm:AggregationLink   a owl:Class ; rdfs:subClassOf opm:FundamentalLink ; rdfs:comment "consists of [ISO 10.3.2]" .
+opm:ExhibitionLink    a owl:Class ; rdfs:subClassOf opm:FundamentalLink ; rdfs:comment "exhibits [ISO 10.3.3]" .
+opm:GeneralizationLink a owl:Class ; rdfs:subClassOf opm:FundamentalLink ; rdfs:comment "is a / are [ISO 10.3.4]" .
+opm:ClassificationLink a owl:Class ; rdfs:subClassOf opm:FundamentalLink ; rdfs:comment "is an instance of [ISO 10.3.5]" .
+opm:TaggedLink        a owl:Class ; rdfs:subClassOf opm:StructuralLink ; rdfs:comment "tagged structural link [ISO 10.2]" .
+opm:Fan               a owl:Class ; rdfs:comment "Link fan with XOR / OR / probabilistic semantics [ISO 12.2, 12.7]." .
+
+# --- refinement (14)
+opm:Refinement a owl:Class ; rdfs:comment "One edge of the OPD tree with the sentence that states it [ISO 14.2.2.6.1.1, 14.2.2.6.1.4]: opm:parent, opm:child (OPDs), opm:refines (the thing), opm:kind (in-zooming / unfolding), opm:sentence." .
+opm:parent a owl:ObjectProperty ; rdfs:domain opm:Refinement ; rdfs:range opm:OPD .
+opm:child  a owl:ObjectProperty ; rdfs:domain opm:Refinement ; rdfs:range opm:OPD .
+opm:kind   a owl:DatatypeProperty ; rdfs:domain opm:Refinement ; rdfs:comment "in-zooming / unfolding" .
+opm:InZoom  a owl:Class ; rdfs:comment "In-zooming of a process or object [ISO 14.2.1.3]." .
+opm:Unfold  a owl:Class ; rdfs:comment "Unfolding of a thing [ISO 14.2.1.2]." .
+
+# --- provenance and structure properties
+opm:sentence   a owl:ObjectProperty ; rdfs:comment "the sentence that states this element" .
+opm:objectSentence  a owl:ObjectProperty ; rdfs:comment "first sentence that uses a thing as an object" .
+opm:processSentence a owl:ObjectProperty ; rdfs:comment "first sentence that uses a thing as a process" .
+opm:propertySentence a owl:ObjectProperty ; rdfs:comment "sentence that states a generic property of a thing" .
+opm:markSentence a owl:ObjectProperty ; rdfs:comment "sentence that marks a state initial, final or default" .
+opm:valueSentence a owl:ObjectProperty ; rdfs:comment "sentence 'Attribute of X is v.' that uses the value v of an attribute whose possible values X inherits from a general or a class [ISO 10.3.4.3, 10.3.5.1]" .
+opm:unconverted a owl:DatatypeProperty ; rdfs:comment "a readable sentence the converter failed on (a defect of the tool, reported as INTERNAL): the exception" .
+opm:durationSentence a owl:ObjectProperty ; rdfs:comment "sentence that gives a duration of a process" .
+opm:inOPD      a owl:ObjectProperty ; rdfs:range opm:OPD .
+opm:shownIn    a owl:ObjectProperty ; rdfs:range opm:OPD ; rdfs:comment "OPD in which a thing appears" .
+opm:line       a owl:DatatypeProperty ; rdfs:range xsd:integer .
+opm:column     a owl:DatatypeProperty ; rdfs:range xsd:integer .
+opm:text       a owl:DatatypeProperty .
+opm:dialect    a owl:DatatypeProperty ; rdfs:comment "annex_a / opcloud: wording outside the clause text" .
+opm:label      a owl:DatatypeProperty ; rdfs:comment "OPD label (SD, SD1, ...)" .
+opm:parentOPD  a owl:ObjectProperty ; rdfs:comment "refinement edge of the OPD tree [ISO 14.2.2.6.1.1]" .
+opm:refines    a owl:ObjectProperty ; rdfs:comment "the thing an in-zoom / unfold / child OPD refines" .
+opm:childOPD   a owl:ObjectProperty .
+
+# --- link ends
+opm:process   a owl:ObjectProperty ; rdfs:comment "process end of an object-process link" .
+opm:object    a owl:ObjectProperty ; rdfs:comment "object end of an object-process link" .
+opm:source    a owl:ObjectProperty ; rdfs:comment "source of a structural, invocation or exception link" .
+opm:target    a owl:ObjectProperty ; rdfs:comment "destination of a structural, invocation or exception link" .
+opm:state     a owl:ObjectProperty ; rdfs:range opm:State ; rdfs:comment "specified state of the object end" .
+opm:fromState a owl:ObjectProperty ; rdfs:range opm:State .
+opm:toState   a owl:ObjectProperty ; rdfs:range opm:State .
+opm:sourceState a owl:ObjectProperty ; rdfs:range opm:State .
+opm:targetState a owl:ObjectProperty ; rdfs:range opm:State .
+opm:modifier  a owl:DatatypeProperty ; rdfs:comment "event / condition" .
+opm:tag       a owl:DatatypeProperty ; rdfs:comment "tag of a tagged link; 'relates to' / 'related' when null" .
+opm:reciprocal a owl:DatatypeProperty ; rdfs:range xsd:boolean .
+opm:multiplicity a owl:DatatypeProperty ; rdfs:comment "participation constraint as written [ISO 11]" .
+opm:sourceMultiplicity a owl:DatatypeProperty ; rdfs:comment "participation constraint at the source end of a tagged link [ISO 11.1]" .
+opm:targetMultiplicity a owl:DatatypeProperty ; rdfs:comment "participation constraint at the destination end of a tagged link [ISO 11.1]" .
+opm:constraint a owl:DatatypeProperty ; rdfs:comment "expression constraint after the object, as written (', where n<=4') [ISO 11.2]" .
+opm:pathLabel a owl:DatatypeProperty ; rdfs:comment "[ISO 13]" .
+opm:probability a owl:DatatypeProperty ; rdfs:comment "[ISO 12.7]" .
+opm:fanKind   a owl:DatatypeProperty ; rdfs:comment "xor / or / probabilistic" .
+opm:member    a owl:ObjectProperty ; rdfs:comment "link of a fan" .
+opm:incomplete a owl:DatatypeProperty ; rdfs:range xsd:boolean ; rdfs:comment "refinee set marked incomplete" .
+opm:featureRole a owl:DatatypeProperty ; rdfs:comment "attribute / operation of an exhibition link" .
+opm:exceptionKind a owl:DatatypeProperty ; rdfs:comment "overtime / undertime" .
+opm:duration  a owl:DatatypeProperty .
+
+# --- things, states and their properties
+opm:name        a owl:DatatypeProperty .
+opm:stateOf     a owl:ObjectProperty ; rdfs:domain opm:State ; rdfs:range opm:Object .
+opm:declared    a owl:DatatypeProperty ; rdfs:range xsd:boolean ; rdfs:comment "state declared by a can be / is sentence" .
+opm:isInitial   a owl:DatatypeProperty ; rdfs:range xsd:boolean .
+opm:isFinal     a owl:DatatypeProperty ; rdfs:range xsd:boolean .
+opm:isDefault   a owl:DatatypeProperty ; rdfs:range xsd:boolean .
+opm:statesSuppressed a owl:DatatypeProperty ; rdfs:range xsd:boolean ; rdfs:comment "or other states [ISO 14.2.1.1]" .
+opm:essence     a owl:DatatypeProperty ; rdfs:comment "physical / informatical (stated or default) [ISO 7.3.3]" .
+opm:affiliation a owl:DatatypeProperty ; rdfs:comment "systemic / environmental (stated or default)" .
+opm:essenceStated     a owl:DatatypeProperty ; rdfs:comment "essence as written in the OPL" .
+opm:affiliationStated a owl:DatatypeProperty ; rdfs:comment "affiliation as written in the OPL" .
+opm:declaredKind a owl:DatatypeProperty ; rdfs:comment "object / process as declared by a generic property sentence" .
+opm:isHuman     a owl:DatatypeProperty ; rdfs:range xsd:boolean ; rdfs:comment "from the input list of humans" .
+opm:featureOf   a owl:ObjectProperty ; rdfs:comment "exhibitor of a feature named 'Feature of Exhibitor'" .
+opm:value       a owl:DatatypeProperty ; rdfs:comment "current value of an attribute (Attribute of Object is v)" .
+opm:rangeMin    a owl:DatatypeProperty .
+opm:rangeMax    a owl:DatatypeProperty .
+opm:maxDuration a owl:DatatypeProperty .
+opm:minDuration a owl:DatatypeProperty .
+opm:minDurationValue a owl:DatatypeProperty ; rdfs:range xsd:decimal ; rdfs:comment "minimal duration as a number, when the minimal and the maximal duration are given in one unit (OPM-9-170); added by the converter" .
+opm:maxDurationValue a owl:DatatypeProperty ; rdfs:range xsd:decimal ; rdfs:comment "maximal duration as a number (OPM-9-170); added by the converter" .
+opm:durationsShown a owl:DatatypeProperty ; rdfs:comment "a minimal duration that exceeds a maximal one, both as written ('5 hours | 2 hours'), for the report" .
+opm:durationsSentence a owl:ObjectProperty ; rdfs:comment "the later of the sentences that give such a minimal and maximal duration" .
+opm:Range a owl:Class ; rdfs:comment "One numeric range of a multiplicity (2 to 4) [ISO 11.1]; opm:lower, opm:upper, opm:text, opm:sentence." .
+opm:lower a owl:DatatypeProperty ; rdfs:domain opm:Range ; rdfs:range xsd:decimal .
+opm:upper a owl:DatatypeProperty ; rdfs:domain opm:Range ; rdfs:range xsd:decimal .
+opm:subprocessOf a owl:ObjectProperty ; rdfs:comment "subprocess -> in-zoomed process [ISO 14.2.1.3]" .
+opm:stepOrder   a owl:DatatypeProperty ; rdfs:range xsd:integer ; rdfs:comment "position in the in-zoom sequence" .
+opm:interimOf   a owl:ObjectProperty ; rdfs:comment "object inside the in-zoom context of a process" .
+opm:distributedTo a owl:ObjectProperty ;
+    rdfs:comment "procedural link at the contour of an in-zoomed process -> each subprocess it applies to [ISO 14.2.2.4.1]; added by the converter" .
+opm:linkSpec    a owl:DatatypeProperty ;
+    rdfs:comment "states and modifier of a procedural link as one string: two links of one kind with the same spec are one link written twice (OPM-8-004); added by the converter" .
+
+# --- structure the converter adds for the paths of the shapes
+opm:hasPart           a owl:ObjectProperty ; rdfs:comment "whole -> part, from an aggregation link [ISO 10.3.2]; added by the converter" .
+opm:hasFeature        a owl:ObjectProperty ; rdfs:comment "exhibitor -> feature, from an exhibition link [ISO 10.3.3]; added by the converter" .
+opm:hasSpecialization a owl:ObjectProperty ; rdfs:comment "general -> specialization, from a generalization link [ISO 10.3.4]; added by the converter" .
+opm:hasInstance       a owl:ObjectProperty ; rdfs:comment "class -> instance, from a classification link [ISO 10.3.5]; added by the converter" .
+opm:specializes       a owl:ObjectProperty ; rdfs:comment "specialization -> general (inverse of opm:hasSpecialization); added by the converter" .
+opm:instanceOf        a owl:ObjectProperty ; rdfs:comment "instance -> class (inverse of opm:hasInstance); added by the converter" .
+opm:refinee           a owl:ObjectProperty ; rdfs:comment "refineable -> refinee of any refinement (part, feature, specialization, instance, subprocess, unfolded thing) [ISO 10.3.1, 14.2.1]; the refinement tree of OPM-14-020" .
+opm:featureName       a owl:DatatypeProperty ; rdfs:comment "the name of a feature without its exhibitor ('Color' of 'Color of Kettle') [ISO 10.3.3.2.2]; added by the converter" .
+opm:featureList       a owl:DatatypeProperty ; rdfs:range xsd:integer ; rdfs:comment "1 or 2: the list of an exhibition sentence the feature stands in (before / after 'as well as') [ISO 10.3.3.1]" .
+opm:convergentEnd     a owl:ObjectProperty ; rdfs:comment "the thing all links of a fan share [ISO 12.2]" .
+opm:primaryEssence    a owl:DatatypeProperty ; rdfs:domain opm:Model ; rdfs:comment "physical / informatical: the essence of the majority of the things, or the setting [ISO 7.3.4]" .
+opm:rule    a owl:AnnotationProperty ; rdfs:comment "on a shape: the catalogue id of its rule" .
+opm:profile a owl:AnnotationProperty ; rdfs:comment "on a shape: iso / opcloud / both" .
+
+# --- direct role properties object -> process, added by the converter
+opm:transformedBy a owl:ObjectProperty .
+opm:enables       a owl:ObjectProperty .
+opm:consumedBy a owl:ObjectProperty ; rdfs:subPropertyOf opm:transformedBy .
+opm:yieldedBy  a owl:ObjectProperty ; rdfs:subPropertyOf opm:transformedBy .
+opm:affectedBy a owl:ObjectProperty ; rdfs:subPropertyOf opm:transformedBy .
+opm:agentOf    a owl:ObjectProperty ; rdfs:subPropertyOf opm:enables .
+opm:instrumentOf a owl:ObjectProperty ; rdfs:subPropertyOf opm:enables .

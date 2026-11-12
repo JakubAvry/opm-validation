@@ -1,0 +1,15 @@
+OPL specification of Book Lending
+SD: Book Lending
+Book can be available or lent.
+Librarian handles Lending.
+Lending requires Catalog System.
+Lending changes Book from available to lent.
+Lending yields Loan Record.
+SD1: Lending in-zoomed
+SD is refined by in-zooming Lending in SD1.
+Lending zooms into Checking and Recording, in that sequence.
+Librarian handles Checking.
+Checking requires Catalog System.
+Checking changes Book from available to lent.
+Recording requires Catalog System.
+Recording yields Loan Record.

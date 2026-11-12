@@ -1,0 +1,63 @@
+# SD
+1. Policyholder is a physical and environmental object.
+2. Claims Adjuster is a physical and systemic object.
+3. Client Portal is an informatical and systemic object.
+4. Claims System is an informatical and systemic object.
+5. Vehicle is a physical and environmental object.
+6. Insurance Policy is an informatical and systemic object.
+7. Insurance Policy is stateful.
+8. Claim is an informatical and systemic object.
+9. Claim is stateful.
+10. Payment Order is an informatical and systemic object.
+11. Decision Letter is an informatical and systemic object.
+12. Payment System is an informatical and systemic object.
+13. Claim Handling is an informatical and systemic process.
+14. Claims Adjuster and Policyholder handle Claim Handling.
+15. Claim Handling requires Claims System, Client Portal, Insurance Policy, Payment System, and Vehicle.
+16. Claim Handling yields Claim, Decision Letter, and Payment Order.
+# SD1
+1. Claim Handling from SD zooms in SD1 into Claim Reporting, Claim Registering, Damage Assessing, Claim Deciding, Indemnity Paying, and Policyholder Notifying, which occur in that time sequence.
+2. Claims Adjuster is a physical and systemic object.
+3. Policyholder is a physical and environmental object.
+4. Client Portal is an informatical and systemic object.
+5. Claims System is an informatical and systemic object.
+6. Payment System is an informatical and systemic object.
+7. Vehicle is a physical and environmental object.
+8. Insurance Policy is an informatical and systemic object.
+9. Insurance Policy can be invalid or valid.
+10. Decision Letter is an informatical and systemic object.
+11. Payment Order is an informatical and systemic object.
+12. Claim is an informatical and systemic object.
+13. Claim can be approved, assessed, paid, registered, rejected or reported.
+    State paid is final.
+    State reported is initial.
+14. Damage Description is an informatical and systemic object.
+15. Photo Set is an informatical and systemic object.
+16. Indemnity Amount of Claim is an informatical and systemic object.
+17. Claim consists of Damage Description and Photo Set.
+18. Claim exhibits Indemnity Amount.
+19. Claim Handling is an informatical and systemic process.
+20. Claim Reporting is an informatical and systemic process.
+21. Policyholder handles Claim Reporting.
+22. Claim Reporting requires Client Portal.
+23. Claim Reporting yields Claim.
+24. Claim Reporting invokes Claim Registering.
+25. Claim Registering is an informatical and systemic process.
+26. Claim Registering changes Claim from reported to registered.
+27. Claim Registering requires Claims System and Insurance Policy at state valid.
+28. Damage Assessing is an informatical and systemic process.
+29. Damage Assessing changes Claim from registered to assessed.
+30. Claims Adjuster handles Damage Assessing.
+31. Damage Assessing requires Claims System and Vehicle.
+32. Damage Assessing affects Indemnity Amount of Claim.
+33. Claim Deciding is an informatical and systemic process.
+34. Claims Adjuster handles Claim Deciding.
+35. Claim Deciding requires Claims System, Indemnity Amount of Claim, and Insurance Policy.
+36. Indemnity Paying is an informatical and systemic process.
+37. Indemnity Paying occurs if Claim is approved, in which case Indemnity Paying changes Claim from approved to paid, otherwise Indemnity Paying is skipped.
+38. Indemnity Paying requires Indemnity Amount of Claim and Payment System.
+39. Indemnity Paying yields Payment Order.
+40. Policyholder Notifying is an informatical and systemic process.
+41. Policyholder Notifying requires Claims System and Client Portal.
+42. Policyholder Notifying yields Decision Letter.
+43. Claim Deciding changes Claim from assessed to exactly one of approved or rejected.

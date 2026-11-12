@@ -1,0 +1,44 @@
+# SD
+1. Department is a physical and systemic object.
+2. Hr Clerk is a physical and systemic object.
+3. Vacancy Report is an informatical and systemic object.
+4. Vacancy Report can be clear or unclear.
+5. Job Advertisement is an informatical and systemic object.
+6. Job Description is an informatical and systemic object.
+7. Job Description can be approved, drafted, rejected or submitted.
+8. State drafted is initial.
+9. Vacancy Handling is an informatical and systemic process.
+10. Department and Hr Clerk handle Vacancy Handling.
+11. Vacancy Handling affects Vacancy Report.
+12. Vacancy Handling yields Job Advertisement and Job Description.
+# SD1
+1. Vacancy Handling from SD zooms in SD1 into Job Description Creating, Clarification Requesting, Job Description Submitting, Job Description Reviewing, Job Description Correcting, and Job Posting, which occur in that time sequence.
+2. Hr Clerk is a physical and systemic object.
+3. Vacancy Report is an informatical and systemic object.
+4. Vacancy Report can be clear or unclear.
+5. Job Description is an informatical and systemic object.
+6. Job Description can be approved, drafted, rejected or submitted.
+7. State drafted is initial.
+8. Department is a physical and systemic object.
+9. Job Advertisement is an informatical and systemic object.
+10. Vacancy Handling is an informatical and systemic process.
+11. Job Description Creating is an informatical and systemic process.
+12. Hr Clerk handles Job Description Creating.
+13. Vacancy Report initiates Job Description Creating, which requires Vacancy Report.
+14. Job Description Creating yields Job Description.
+15. Clarification Requesting is an informatical and systemic process.
+16. Clarification Requesting occurs if Vacancy Report is unclear, in which case Clarification Requesting changes Vacancy Report from unclear to clear, otherwise Clarification Requesting is skipped.
+17. Department and Hr Clerk handle Clarification Requesting.
+18. Job Description Submitting is an informatical and systemic process.
+19. Job Description Submitting changes Job Description from drafted to submitted.
+20. Hr Clerk handles Job Description Submitting.
+21. Job Description Reviewing is an informatical and systemic process.
+22. Department handles Job Description Reviewing.
+23. Job Description Correcting is an informatical and systemic process.
+24. Job Description Correcting occurs if Job Description is rejected, in which case Job Description Correcting changes Job Description from rejected to submitted, otherwise Job Description Correcting is skipped.
+25. Hr Clerk handles Job Description Correcting.
+26. Job Posting is an informatical and systemic process.
+27. Hr Clerk handles Job Posting.
+28. Job Posting occurs if Job Description is at state approved, otherwise Job Posting is skipped.
+29. Job Posting yields Job Advertisement.
+30. Job Description Reviewing changes Job Description from submitted to exactly one of approved or rejected.

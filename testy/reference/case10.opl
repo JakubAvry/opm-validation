@@ -1,0 +1,81 @@
+# SD
+1. Employee is a physical and systemic object.
+2. Purchase Department is a physical and systemic object.
+3. Supervisor is a physical and systemic object.
+4. Procurement System is an informatical and systemic object.
+5. Vendor is an informatical and systemic object.
+6. Vendor can be confirmed, invalid, listed or selected.
+7. State listed is initial.
+8. Invoice is an informatical and systemic object.
+9. Notification is an informatical and systemic object.
+10. Office Supply is a physical and systemic object.
+11. Office Supply Request is an informatical and systemic object.
+12. Office Supply Request can be approved, registered, rejected, returned or submitted.
+13. State submitted is initial.
+14. Purchase Order is an informatical and systemic object.
+15. Purchase Order can be generated or sent.
+16. State generated is initial.
+17. Quotation is an informatical and systemic object.
+18. Office Supply Requesting is a physical and systemic process.
+19. Employee, Purchase Department, and Supervisor handle Office Supply Requesting.
+20. Office Supply Requesting requires Procurement System.
+21. Office Supply Requesting affects Vendor.
+22. Office Supply Requesting yields Invoice, Notification, Office Supply, Office Supply Request, Purchase Order, and Quotation.
+# SD1
+1. Office Supply Requesting from SD zooms in SD1 into Request Submitting, Request Registering, Request Reviewing, Employee Notifying, Change Reviewing, Quotation Making, Vendor Selecting, Vendor Validating, Purchase Order Generating, Purchase Order Sending, and parallel Invoice Receiving and Office Supply Delivering, which occur in that time sequence.
+2. Employee is a physical and systemic object.
+3. Office Supply Request is an informatical and systemic object.
+4. Office Supply Request can be approved, registered, rejected, returned or submitted.
+5. State submitted is initial.
+6. Procurement System is an informatical and systemic object.
+7. Supervisor is a physical and systemic object.
+8. Notification is an informatical and systemic object.
+9. Purchase Department is a physical and systemic object.
+10. Quotation is an informatical and systemic object.
+11. Vendor is an informatical and systemic object.
+12. Vendor can be confirmed, invalid, listed or selected.
+13. State listed is initial.
+14. Purchase Order is an informatical and systemic object.
+15. Purchase Order can be generated or sent.
+16. State generated is initial.
+17. Invoice is an informatical and systemic object.
+18. Office Supply is a physical and systemic object.
+19. Office Supply Requesting is a physical and systemic process.
+20. Request Submitting is an informatical and systemic process.
+21. Employee initiates and handles Request Submitting.
+22. Request Submitting yields Office Supply Request.
+23. Request Registering is an informatical and systemic process.
+24. Request Registering changes Office Supply Request from submitted to registered.
+25. Request Registering requires Procurement System.
+26. Request Reviewing is an informatical and systemic process.
+27. Supervisor handles Request Reviewing.
+28. Employee Notifying is an informatical and systemic process.
+29. Employee Notifying requires Procurement System.
+30. Employee Notifying yields Notification.
+31. Change Reviewing is an informatical and systemic process.
+32. Change Reviewing occurs if Office Supply Request is returned, in which case Change Reviewing changes Office Supply Request from returned to submitted, otherwise Change Reviewing is skipped.
+33. Employee handles Change Reviewing.
+34. Quotation Making is an informatical and systemic process.
+35. Purchase Department handles Quotation Making.
+36. Quotation Making occurs if Office Supply Request is at state approved, otherwise Quotation Making is skipped.
+37. Quotation Making yields Quotation.
+38. Vendor Selecting is an informatical and systemic process.
+39. Vendor Selecting changes Vendor from listed to selected.
+40. Purchase Department handles Vendor Selecting.
+41. Vendor Selecting requires Quotation.
+42. Vendor Validating is an informatical and systemic process.
+43. Vendor Validating requires Procurement System.
+44. Purchase Order Generating is an informatical and systemic process.
+45. Purchase Order Generating requires Procurement System.
+46. Purchase Order Generating occurs if Vendor is at state confirmed, otherwise Purchase Order Generating is skipped.
+47. Purchase Order Generating yields Purchase Order.
+48. Purchase Order Sending is an informatical and systemic process.
+49. Purchase Order Sending changes Purchase Order from generated to sent.
+50. Purchase Order Sending requires Procurement System.
+51. Invoice Receiving is an informatical and systemic process.
+52. Invoice Receiving requires Procurement System.
+53. Invoice Receiving yields Invoice.
+54. Office Supply Delivering is a physical and systemic process.
+55. Office Supply Delivering yields Office Supply.
+56. Request Reviewing changes Office Supply Request from registered to exactly one of approved, rejected or returned.
+57. Vendor Validating changes Vendor from selected to exactly one of confirmed or invalid.

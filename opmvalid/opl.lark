@@ -1,0 +1,262 @@
+// OPL grammar for one sentence (ISO 19450:2024, Annex A and the clause text), with the OPCloud dialect.
+// Lark, Earley parser with the dynamic_complete lexer (names and states are multi-word; the parser finds the split).
+//
+// Rule-name prefixes mark where a form comes from:
+//   (none)  form of the clause text of the norm (and of Annex A where they agree)
+//   ax_     form found only in Annex A
+//   opc_    form written by OPCloud (verified in OPCloud exports, testy/reference)
+//   fig_    form found only in an example (figure) of the norm, not in a syntax statement nor in Annex A
+// Defects of the norm the grammar works around are noted with the finding id (katalog/pravidla.yaml, N-xxx).
+// Paragraph labels, numbering and sentence splitting are handled by parser.py, not here.
+// Rules marked with ! keep their literal words in the tree (the converter needs them).
+
+start: sentence
+
+?sentence: generic_property
+         | state_sentence
+         | procedural
+         | structural
+         | context
+         | path_sentence
+         | opc_duration
+
+// ------------------------------------------------------------------ names, states, lists
+
+thing: NAME unit?
+unit: "in" UNIT                                   // 7.3.5.5: Temperature in degrees Celsius; never "in any state" (9.5.2.3.4)
+feature: thing ("of" thing)+                      // 10.3.3.2.2: Attribute of Exhibitor (also nested)
+?ref: feature | thing
+
+state: STATE
+states_or: state ("," state)* ","? "or" state                  // body examples, OPCloud (N-010)
+states_and: state ("," state)* ","? "and" state                // Annex A (N-010)
+
+// an object as an end of a link: [multiplicity] [state] Name [at state s] [, where constraint]
+obj: mult? state? ref opc_at_state? where?
+opc_at_state: "at" "state" state                  // OPCloud: P consumes O at state s
+
+obj_list: obj (("," obj)* ","? "and" obj)?
+obj_alts: obj ("," obj)* ","? ("or" | "and") obj   // fans: 12.2 "and", tables and Annex A "or" (N-039)
+proc_list: ref (("," ref)* ","? "and" ref)?
+proc_alts: ref ("," ref)* ","? ("or" | "and") ref
+
+// Multiplicity (11.1, 11.2, Figures 32-34; Annex A defines no production for it, N-038). Priority .2: "i inspected
+// Blades" is the parameter i and the state inspected, not the state "i inspected"; "An optional Engineer" at the start
+// of a sentence is a multiplicity (Annex A "upper single"), not part of the name.
+!mult.2: mult_range ("or" mult_range)*
+       | ("an" | "An") "optional" | "optional" | "Optional" | "many" | "Many"
+       | ("at" | "At") "least" ("one" | NUMBER | NUMWORD)
+!mult_range: (MPARAM "=")? mult_value (("to" | "through") mult_value)?   // 11.1 "through"; examples, OPCloud "to" (N-037)
+           | (MPARAM | "a") RELOP mult_value                            // "a <= b inspected Blades" (Figure 33)
+?mult_value: NUMBER | NUMWORD | MPARAM | MEXPR
+// ", where n<=4", ", where e >= 1, e = b+2*w", ", where b in {0, 1}" (11.2, Figures 32, 34)
+where: "," "where" constraint ((","|";") constraint)*
+!constraint: c_term (RELOP c_term)+ | MPARAM "in" "{" NUMBER ("," NUMBER)* "}"
+?c_term: NUMBER | MPARAM | MEXPR
+
+any_of: "at" "least" "one" "of"
+one_of: "exactly" "one" "of" | ax_one_of
+ax_one_of: "one" "of"                             // Annex A "Xor list at end"
+fan_head_or: "At"i "least" "one" "of"
+fan_head_xor: "Exactly"i "one"i "of" | "One" "of"  // "Exactly One of" in Annex A (N-005)
+
+// ------------------------------------------------------------------ thing description (7.3)
+
+generic_property: ref "is" article? prop ("and" prop)* kind?
+article: "a" | "an"
+kind: "object" | "process"
+prop: PROP
+
+!state_sentence: ref "can" "be" (states_or | states_and | state)                          -> state_enum
+              | ref "can" "be" state ("," state)* ","? ("or" | "and") "other" "states"   -> state_enum_open  // 14.2.1.1 (N-046)
+              | ref "is" state                                                        -> single_state
+              | "State" state "of" ref "is" marks                                     -> state_mark
+              | opc_state_mark
+              | "States" states_and "of" ref "are" marks                              -> states_mark
+              | ref "is" "initially" state "and" "finally" state                      -> ax_combined_state
+              | ref "is" "stateful"                                                   -> opc_stateful
+!opc_state_mark: "State" state "is" marks                                              // OPCloud: State s is initial.
+marks: MARK ("and" MARK)*
+
+// ------------------------------------------------------------------ procedural sentences (9, 12)
+
+?procedural: consumption | result | effect | change | agent | instrument
+           | event | condition | invocation | exception | probabilistic
+
+consumption: ref "consumes" obj_list
+           | ref "consumes" (any_of | one_of) obj_alts
+           | (fan_head_or | fan_head_xor) proc_alts "consumes" obj
+result: ref "yields" obj_list
+      | ref "yields" (any_of | one_of) obj_alts
+      | (fan_head_or | fan_head_xor) proc_alts "yields" obj
+effect: ref "affects" obj_list
+      | ref "affects" (any_of | one_of) obj_alts
+      | (fan_head_or | fan_head_xor) proc_alts "affects" obj
+change: ref "changes" change_item (("," change_item)* ","? "and" change_item)?
+      | ref "changes" (any_of | one_of) change_item ("," change_item)* ","? ("or" | "and") change_item
+// Priorities (.N): a multi-word state may contain "to"; the specific forms win over a longer state.
+?change_item: change_io | change_in | change_out | change_in_alts | opc_change_any | opc_change_to_state
+opc_change_to_state.2: ref "to" "state" state            // "changes Heuristic to state rule of thumb" (NCAI, case11)
+change_io.2: ref "from" state "to" to_state
+change_in: ref "from" state
+change_out.1: ref "to" state
+change_in_alts.2: ref "from" states_or "to" state
+to_state: state | (one_of | any_of) states_or | (one_of | any_of) states_and
+opc_change_any.3: ref "from" state "to" "any" "other" "state" | ref "from" "any" "other" "state" "to" state
+
+agent: obj_list ("handles" | verb_handle) ref
+     | obj "handles" (any_of | one_of) proc_alts
+     | (fan_head_or | fan_head_xor) obj_alts ("handles" | verb_handle) ref
+     | obj_list ("handles" | verb_handle) ref ("," ref)* ","? "and" ref   -> fig_agent_procs  // Figure 47 (N-061)
+verb_handle: "handle"                              // plural for several agents; Annex A uses it for one too (N-015)
+instrument: ref "requires" obj_list
+          | ref "requires" (any_of | one_of) obj_alts
+          | (fan_head_or | fan_head_xor) proc_alts "requires" obj
+
+// events (9.5.2): Object initiates Process, which ...
+event: obj "initiates" ref "," "which" "consumes" obj                       -> event_consumption
+     | obj "initiates" ref "," "which" "affects" obj                        -> event_effect
+     | obj "initiates" ref ","? "which" "changes" change_item               -> event_change
+     | obj "in" "any" "state" "initiates" ref "," "which" "changes" change_item -> event_change_any
+     | obj "initiates" ref "," "which" "requires" obj                       -> event_instrument
+     | obj "initiates" "and" "handles" ref                                  -> event_agent
+     | obj "initiates" "and" "handles" (any_of | one_of) proc_alts          -> event_agent_fan  // Table 23
+     | obj "initiates" (any_of | one_of) proc_alts "," "which" event_tail   -> event_fan
+
+!event_tail: ("consumes" | "affects" | "requires") obj | "changes" change_item
+          | ("consumes" | "affects") "the" ("initiated" | "occurring") "process"   // Tables 22, 23 (N-042)
+
+// conditions (9.5.3): several wordings in the norm (N-017, N-018)
+condition: ref "occurs" "if" cond_subject ("," "in" "which" "case" cond_effect)? "," skip   -> cond_occurs
+         | ref "occurs" "if" "there" "is" state ref ","? "in" "which" "case" cond_effect "," skip -> ax_cond_there_is
+         | "If"i (cond_subject | obj) "then" cond_then "," "otherwise" "bypass" ref    -> cond_if   // without "exists": N-018
+         | obj "handles" ref "if" cond_subject "," skip                              -> cond_agent
+         | ref "requires" "that" cond_subject "," skip                               -> cond_requires_that
+         | ref "occurs" "if" opc_negation                                            -> opc_cond_negation
+         // condition link fans (12.5, 12.6, Tables 22, 23)
+         | (fan_head_or | fan_head_xor) proc_alts "occurs" "if" cond_subject "," "in" "which" "case" cond_effect "," skip -> cond_fan
+         | obj "handles" (any_of | one_of) proc_alts "if" cond_subject "," skip     -> cond_agent_fan
+         | (fan_head_or | fan_head_xor) proc_alts "requires" "that" cond_subject "," skip -> cond_requires_fan
+!cond_subject: obj ("exists" | "is" "present")
+            | ref "is" state
+            | ref "is" "at" "state" state                          -> opc_cond_at_state
+            | opc_negation
+opc_negation: ref "does" "not" "exist" | ref "is" "not" "at" "state" state | obj "does" "not" "exist"
+!cond_effect: ref "is" "consumed" | ref ("consumes" | "affects") obj | ref "changes" change_item
+           | "the" "occurring" "process" ("consumes" | "affects") obj
+!cond_then: ref "occurs" ("and" ("consumes" | "affects") obj)?
+         | ref ("handles" | "changes") (ref | change_item)
+         | obj "handles" ref
+skip: ("otherwise" | "else") (ref | "these" "processes") ("is" | "are") "skipped"
+    | ("otherwise" | "else") "bypass" ref
+
+invocation: ref "invokes" proc_list
+          | ref "invokes" "itself"
+          | ref "invokes" (any_of | one_of) proc_alts
+          | (fan_head_or | fan_head_xor) proc_alts "invokes" ref
+
+// exceptions (9.5.4)
+!exception: ref "occurs" "if" "duration" "of" ref ("exceeds" | "falls" "short" "of") duration
+         | opc_exception
+!opc_exception: ref "occurs" "if" ref ("lasts" "more" "than" | "falls" "short" "of") duration
+duration: (NUMBER | NUMWORD | PARAM) UNIT
+!opc_duration: "The"i ("maximal" | "minimal" | "expected") "duration" "of" ref "is" duration
+            | "The"i "minimal" "duration" "and" "maximal" "duration" "of" ref "are" duration "and" duration "," "respectively"
+
+// probabilistic fans (12.7)
+// At least one member carries a probability; a member without one is read (prob_bare) and reported by OPM-12-022.
+probabilistic: ref "yields" _prob_items
+             | _prob_procs ("consumes" | "yields" | "affects") obj
+_prob_items: (_item_any ",")* prob_item ("," _item_any)* ","? "or" _item_any
+           | (_item_any ",")* _item_any ","? "or" prob_item
+_item_any: prob_item | prob_bare
+_prob_procs: (_proc_any ",")* prob_proc ("," _proc_any)* ","? "or" _proc_any
+           | (_proc_any ",")* _proc_any ","? "or" prob_proc
+_proc_any: prob_proc | prob_proc_bare
+prob_item: obj "with" "probability" PROB
+prob_bare: obj
+prob_proc: ref "with" "probability" PROB
+prob_proc_bare: ref
+
+// ------------------------------------------------------------------ structural sentences (10)
+
+?structural: aggregation | exhibition | state_characterization | feature_value | generalization | instantiation
+           | tagged
+
+aggregation: ref "consists" "of" part_list
+!part_list: obj (("," obj)* ","? "and" (obj | "at" "least" "one" "other" "part" | "other" "parts"))? opc_sequence?
+opc_sequence: "in" "that" "sequence"                 // OPCloud: ordered parts
+
+exhibition: ref "exhibits" feat_list ("," "as" "well" "as" feat_list)?
+state_characterization.2: ref "exhibits" state ref   // 10.4.1; before a feature in a state ("exhibits fast Speed")
+!feat_list: obj (("," obj)* ","? "and" (obj | partial_feature))?
+!partial_feature: "at" "least" ("one" "other" | "another") ("attribute" | "operation" | "operator")
+
+feature_value.2: feature "is" value                    -> attribute_value          // 11.3
+             | feature "ranges" "from" value "to" value -> attribute_range
+             | feature "range" "is" value "to" value   -> attribute_range_clause // 11.3 text (N-037)
+value: NUMBER | state
+
+generalization: ref "is" article ref                                   -> gen_single
+              | ref "is" ref                                           -> gen_single_process
+              | proc_list "are" ref                                    -> gen_many
+              | ref ("," ref)* ","? "and" "other" "specializations" "are" ref -> gen_partial
+              | ref "can" "be" "either" ref "or" ref                   -> ax_gen_xor
+              | ref "can" "be" "one" "of" proc_alts                    -> ax_gen_xor_list
+instantiation: ref "is" "an" "instance" "of" ref
+             | proc_list "are" "instances" "of" ref
+             | proc_list "are" "an" "instance" "of" ref                -> ax_instances   // N-034
+
+// tagged links (10.2, 10.4.2); TAG is any lower-case phrase; the fixed forms above have priority .2 over it
+tagged: obj "relates" "to" obj                                         -> tagged_null
+      | obj "and" obj "are" "related"                                  -> reciprocal_null
+      | obj "and" obj "are" "equivalent"                               -> opc_reciprocal_null
+      | obj "and" obj "are" TAG                                        -> reciprocal
+      | obj TAG obj                                                    -> tagged_uni
+
+// ------------------------------------------------------------------ context management (14)
+
+?context: zoom | unfold | refinement | folding
+
+zoom: ref "zooms" "into" seq_list (","? "in" "that" "sequence")? ("," "as" "well" "as" obj_list)?
+    | ref "from" OPD "zooms" "in" OPD "into" seq_list ","? "in" "that" "sequence" -> ax_zoom_new_diagram
+    | opc_zoom
+opc_zoom: ref "from" OPD "zooms" "in" OPD "into" seq_list "," "which" "occur" "in" "that" "time" "sequence" ("," "as" "well" "as" obj_list)?
+seq_list: seq_item (("," seq_item)* ","? "and" seq_item)?
+seq_item: ref | "parallel" ref ("," ref)* ","? "and" ref
+
+!unfold.2: ref "unfolds" "into" proc_list ("," "as" "well" "as" proc_list)?
+      | ref "from" OPD UNFOLD_KIND "in" OPD "into" proc_list ("," "as" "well" "as" proc_list)? -> unfold_new_diagram
+!refinement.2: OPD "is" "refined" "by" ("in-zooming" | "unfolding") ref "in" OPD
+folding: ref "is" "folding" "of" OPD | ref "is" "out" "zoom" "from" OPD
+
+path_sentence: "Following"i "path" LABEL "," sentence
+
+// ------------------------------------------------------------------ terminals
+// Every terminal starts and ends at a word boundary, so that keywords cannot match inside words.
+
+// A name: words starting with a capital letter, '#', '&' or digits after the first word ("Mixture Lot #7545").
+NAME: /(?<![\w#&'’\/+\-])(?:(?!(?:State|States|If|At|Exactly|One|The|Following)\b)[A-Z#][\w#&'’\/+\-]*(?:[ ]+(?:[A-Z0-9#&][\w#&'’\/+\-]*|&))*)(?![\w#&'’\/+\-])/
+// A state or value: lower-case words (multi-word allowed, N-014); the parser chooses the split. A state never
+// starts with "by default": "X is by default 7." (Annex C, Figure C.4) is not a form the grammar reads, and it must
+// not be read as the value "by default 7".
+STATE: /(?<![\w#&'’\/+\-])(?:(?!(?:by default|optional|many|at least|at state|initially|stateful|not at state|any other state|other states|exactly|one of|at least one of|or|and|where|through|to[ ]+(?:\d+|[a-z]|zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|twenty))\b)[a-z0-9][\w'’\-&]*(?:[ ]+(?:[a-z0-9&][\w'’\-&]*))*)(?![\w#&'’\/+\-])(?<![ ]to)(?<![ ]from)(?<![ ]of)(?<![ ]and)(?<![ ]or)(?<![ ]if)/
+TAG: /(?<![\w#&'’\/+\-])(?:[a-z][\w'’\-]*(?:[ ]+[a-z][\w'’\-]*)*)(?![\w#&'’\/+\-])/
+UNIT: /(?<![\w#&'’\/+\-])(?!any[ ]+state\b)(?:[A-Za-z%°][\w\/%°³²\-]*(?:[ ]+[A-Za-z][\w\/%°³²\-]*)*)(?![\w#&'’\/+\-])/
+PROP: /(?<![\w#&'’\/+\-])(?:physical|informatical|systemic|environmental|persistent|transient|static|dynamic)(?![\w#&'’\/+\-])/i
+MARK: /(?<![\w#&'’\/+\-])(?:initial|final|default)(?![\w#&'’\/+\-])/
+NUMBER: /(?<![\w#&'’\/+\-])(?:\d+(?:[.,]\d+)?)(?![\w#&'’\/+\-])/
+NUMWORD: /(?<![\w#&'’\/+\-])(?:[Zz]ero|[Oo]ne|[Tt]wo|[Tt]hree|[Ff]our|[Ff]ive|[Ss]ix|[Ss]even|[Ee]ight|[Nn]ine|[Tt]en|[Ee]leven|[Tt]welve|[Tt]wenty)(?![\w#&'’\/+\-])/
+// multiplicity parameter (one lower-case letter, as in all examples of 11.2; "a" alone is the article, so it is a
+// parameter only before a relation) and arithmetic expression (11.2)
+MPARAM: /(?<![\w#&'’\/+\-])[b-z](?![\w#&'’\/+\-])/
+MEXPR: /(?<![\w#&'’\/+\-])[(]*(?:\d+|[a-z])[)]*(?:\s*[+\-–*\/]\s*[(]*(?:\d+|[a-z])[)]*)+(?![\w#&'’\/+\-])/
+RELOP: "<=" | ">=" | "=" | "<" | ">"
+PARAM: /(?<![\w#&'’\/+\-])(?:[a-z]\w*)(?![\w#&'’\/+\-])/
+PROB: /(?<![\w#&'’\/+\-])(?:\d+(?:[.,]\d+)?|[a-z][\w+\-*\/ ]*)(?![\w#&'’\/+\-])/
+OPD: /(?<![\w#&'’\/+\-])(?:SD\d*(?:\.\d+)*)(?![\w#&'’\/+\-])/
+UNFOLD_KIND: /(?<![\w#&'’\/+\-])(?:part-unfolds|feature-unfolds|specialization-unfolds|instance-unfolds)(?![\w#&'’\/+\-])/
+LABEL: /(?<![\w#&'’\/+\-])(?:[\w\-]+)(?![\w#&'’\/+\-])/
+
+%import common.WS_INLINE
+%ignore WS_INLINE

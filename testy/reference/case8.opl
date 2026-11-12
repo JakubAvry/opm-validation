@@ -1,0 +1,58 @@
+# SD
+1. Engineering Department is a physical and systemic object.
+2. Sales Department is a physical and systemic object.
+3. Storehouse is a physical and systemic object.
+4. Order is an informatical and systemic object.
+5. Order can be accepted, received or rejected.
+6. State received is initial.
+7. Part is a physical and systemic object.
+8. Part can be back-ordered, required or reserved.
+9. State required is initial.
+10. Bicycle is a physical and systemic object.
+11. Bicycle can be assembled or shipped.
+12. State assembled is initial.
+13. State shipped is final.
+14. Bicycle Manufacturing is a physical and systemic process.
+15. Engineering Department, Sales Department, and Storehouse handle Bicycle Manufacturing.
+16. Bicycle Manufacturing affects Order.
+17. Bicycle Manufacturing consumes Part.
+18. Bicycle Manufacturing yields Bicycle.
+# SD1
+1. Bicycle Manufacturing from SD zooms in SD1 into Order Deciding, parallel Assembly Preparing and Part List Processing, Bicycle Assembling, and Bicycle Shipping, which occur in that time sequence, as well as Assembly Setup.
+2. Sales Department is a physical and systemic object.
+3. Order is an informatical and systemic object.
+4. Order can be accepted, received or rejected.
+5. State received is initial.
+6. Storehouse is a physical and systemic object.
+7. Part List is an informatical and systemic object.
+8. Part is a physical and systemic object.
+9. Part can be back-ordered, required or reserved.
+10. State required is initial.
+11. Engineering Department is a physical and systemic object.
+12. Bicycle is a physical and systemic object.
+13. Bicycle can be assembled or shipped.
+14. State assembled is initial.
+15. State shipped is final.
+16. Assembly Setup is a physical and systemic object.
+17. Order consists of Part List.
+18. Bicycle Manufacturing is a physical and systemic process.
+19. Order Deciding is an informatical and systemic process.
+20. Sales Department handles Order Deciding.
+21. Assembly Preparing is a physical and systemic process.
+22. Engineering Department handles Assembly Preparing.
+23. Assembly Preparing occurs if Order is at state accepted, otherwise Assembly Preparing is skipped.
+24. Assembly Preparing yields Assembly Setup.
+25. Part List Processing is a physical and systemic process.
+26. Storehouse handles Part List Processing.
+27. Part List Processing requires Part List.
+28. Part List Processing occurs if Order is at state accepted, otherwise Part List Processing is skipped.
+29. Bicycle Assembling is a physical and systemic process.
+30. Engineering Department handles Bicycle Assembling.
+31. Bicycle Assembling requires Assembly Setup.
+32. Bicycle Assembling consumes Part at state reserved.
+33. Bicycle Assembling yields Bicycle.
+34. Bicycle Shipping is a physical and systemic process.
+35. Bicycle Shipping changes Bicycle from assembled to shipped.
+36. Sales Department handles Bicycle Shipping.
+37. Order Deciding changes Order from received to exactly one of accepted or rejected.
+38. Part List Processing changes Part from required to exactly one of back-ordered or reserved.

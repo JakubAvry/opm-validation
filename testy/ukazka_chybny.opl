@@ -1,0 +1,12 @@
+SD: Printing System
+Printing is physical.
+Operator handles Printing.
+Printing consumes Paper.
+Printing yields Paper.
+Report can be draft or approved.
+Printing yields final Report.
+Paper consumes Ink.
+Printing changes Toner from full to full.
+Scanning requires Scanner.
+Printer handles Printing.
+Printing consumes

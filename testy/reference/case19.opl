@@ -1,0 +1,37 @@
+# SD
+1. Customer is a physical and environmental object.
+2. Manager is a physical and systemic object.
+3. Sales Assistant is a physical and systemic object.
+4. Lead is an informatical and systemic object.
+5. Lead can be interested, not interested, open or selected.
+6. State open is initial.
+7. Sales Lead Handling is an informatical and systemic process.
+8. Customer, Manager, and Sales Assistant handle Sales Lead Handling.
+9. Sales Lead Handling affects Lead.
+# SD1
+1. Sales Lead Handling from SD zooms in SD1 into Lead Checking, Lead Selecting, Customer Calling, Note Sending, and Lead Processing, which occur in that time sequence, as well as Note.
+2. Manager is a physical and systemic object.
+3. Lead is an informatical and systemic object.
+4. Lead can be interested, not interested, open or selected.
+5. State open is initial.
+6. Customer is a physical and environmental object.
+7. Sales Assistant is a physical and systemic object.
+8. Note is an informatical and systemic object.
+9. Sales Lead Handling is an informatical and systemic process.
+10. Lead Checking is an informatical and systemic process.
+11. Manager handles Lead Checking.
+12. Lead Checking affects Lead.
+13. Lead Selecting is an informatical and systemic process.
+14. Lead Selecting changes Lead from open to selected.
+15. Manager handles Lead Selecting.
+16. Customer Calling is an informatical and systemic process.
+17. Customer and Sales Assistant handle Customer Calling.
+18. Note Sending is an informatical and systemic process.
+19. Sales Assistant handles Note Sending.
+20. Note Sending occurs if Lead is at state interested, otherwise Note Sending is skipped.
+21. Note Sending yields Note.
+22. Lead Processing is an informatical and systemic process.
+23. Manager handles Lead Processing.
+24. Note initiates Lead Processing, which requires Note.
+25. Lead Processing affects Lead.
+26. Customer Calling changes Lead from selected to exactly one of interested or not interested.

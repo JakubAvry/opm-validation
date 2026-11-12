@@ -1,0 +1,934 @@
+// Invalid OPL models, one per SHACL shape; own names, no text copied from the norm.
+// "== <codes> [| humans=A, B] [| profile=opcloud] [| info=A, B]" starts a case; the lines up to the next "==" are
+// its model; info = I codes that must be reported as well.
+// <codes> = the E and W codes the validator must report, all of them and nothing else ("-" = none: a valid
+// model). testy/test_neplatne.py also checks that every message and hint is filled (no "…").
+// Each model is otherwise valid, so an extra code would be a false finding or a cascade.
+// "!! <code>: <reason>" = a shape without its own case, with the reason.
+
+!! OPM-9-001: in OPL the kind of a thing follows from its place in the sentences, so a transforming link with the wrong kind at one end is always the conflict of OPM-7-009 and is reported once by it (cases below).
+!! OPM-9-021: as OPM-9-001, for enabling links.
+!! OPM-9-087: as OPM-9-001, for invocation and exception links.
+!! OPM-10-020: the grammar reads every fundamental-relation sentence with one refineable and at least one refinee; the shape checks RDF that does not come from OPL text.
+
+// ---------------------------------------------------------------- valid models (no false findings)
+== -
+Brewing consumes Leaf.
+Brewing yields Tea.
+
+== -
+Water can be cold or hot.
+Barista handles Brewing.
+Brewing requires Kettle.
+Brewing changes Water from cold to hot.
+
+// ---------------------------------------------------------------- syntax and dialect
+// an unreadable sentence is reported with the form it was meant to be (opmvalid/syntax.py)
+== OPM-9-006
+Brewing consumes
+
+// what Brewing yields is in the unreadable sentence: no OPM-8-010 (I entry: not checked)
+== OPM-9-014
+Brewing consumes Leaf.
+Brewing yields Tea with chance 0,7.
+
+// no recognisable form
+== SYNTAX
+Brewing consumes Leaf.
+Brewing yields Tea.
+Tea Leaf.
+
+== OPM-7-004
+Brewing consumes tea leaf.
+Brewing yields Tea.
+
+// "is by default" (informative Annex C, Figure C.4) is not a sentence form of the norm: unreadable, never read
+// as the value "by default 2"
+== SYNTAX
+Kettle exhibits Capacity.
+Capacity of Kettle can be 1, 2, or 3.
+Capacity of Kettle is by default 2.
+
+== OPM-7-021
+Water can be cold or hot.
+Heating changes Water from Cold to Hot.
+
+// a result link with an event (8.2.3): no such sentence form
+== OPM-8-013
+Brewing consumes Leaf.
+Leaf initiates Brewing, which yields Tea.
+
+// a structural relation with an event (6.2.4)
+== OPM-6-015
+Brewing affects Water.
+Kettle initiates Lid, which consists of Knob.
+
+== OPM-13-003
+Following path green Brewing consumes Green Leaf.
+Brewing yields Tea.
+
+// the same object twice in an event sentence (9.5.2): checked while converting the sentence
+== OPM-9-092
+Leaf initiates Brewing, which consumes Water.
+Brewing yields Tea.
+
+== OPM-9-109
+Water can be cold or hot.
+Hot Water initiates Heating, which changes Water from cold to hot.
+
+== OPM-9-121
+Kettle can be ready or busy.
+Brewing affects Water.
+Ready Kettle initiates Brewing, which requires busy Kettle.
+
+== OPM-9-129
+Brewing affects Water.
+Brewing invokes Brewing.
+
+// event fans (12.5, 12.6, Tables 22, 23): one event link per process of the fan, no false finding
+== -
+Cup can be clean or dirty.
+Cup initiates exactly one of Pouring or Rinsing, which affects the occurring process.
+Dirty Cup initiates at least one of Washing or Soaking, which changes Cup from dirty to clean.
+
+// ... and the object after "which" is the initiating object, as in the event sentences of 9.5.2
+== OPM-12-019
+Cup initiates exactly one of Pouring or Rinsing, which consumes Lid.
+Pouring yields Tea.
+Rinsing yields Waste.
+
+// "<Object> in any state initiates ..." (9.5.2.3.4): "in any state" is not a unit of measure
+== - | covers=OPM-9-115
+Water can be cold or hot.
+Water in any state initiates Heating, which changes Water to hot.
+
+== OPM-9-115
+Water can be cold or hot.
+Cup in any state initiates Heating, which changes Water to hot.
+
+// a multi-word state at the start of a sentence is capitalised too (9.4.1 NOTE, Table 7): it is read
+// as state + object when the object declares that state (also after a path label)
+== - | covers=OPM-9-072
+Barista can be on duty or off duty.
+Order can be awaiting payment or paid.
+Kettle can be switched on or switched off.
+On duty Barista handles Brewing.
+Awaiting payment Order initiates Charging, which changes Order from awaiting payment to paid.
+Switched on Kettle relates to Socket.
+Brewing affects Water.
+
+== -
+Barista can be on duty or off duty.
+Following path quick, On duty Barista handles Brewing.
+Following path quick, Brewing yields Tea.
+Brewing consumes Leaf.
+
+// ... otherwise the lower-case word belongs to a wrongly written name
+== OPM-7-004
+Barista can be on duty or off duty.
+On break Barista handles Brewing.
+Brewing affects Water.
+
+// the general of several specializations is written in plural (10.3.4.1, Figures 24, 25): it is the
+// thing named in singular elsewhere in the text, so the specializations inherit its features and their values
+== -
+Kettle exhibits Color.
+Color of Kettle can be red or blue.
+Travel Kettle, Office Kettle, and other specializations are Kettles.
+Glass Kettle and Steel Kettle are Kettles.
+Color of Travel Kettle is red.
+Glass Kettle exhibits blue Color.
+
+// an object after a multiplicity is written in plural (11.1, Figure 33): the same object as its
+// singular in the text or in the list of humans
+== - | humans=Barista
+Bag can be dry or wet.
+Two Baristas handle Brewing.
+Brewing consumes 2 dry Bags.
+Brewing yields Tea.
+
+// condition sentences (9.5.3) name their object and their process twice, and the condition state is the input
+// state of a change: checked while converting the sentence, as in event sentences
+== -
+Leaf can be dry or wet.
+Water can be cold or hot.
+Barista can be rested or tired.
+Kettle can be ready or busy.
+Brewing occurs if Leaf is dry, in which case Leaf is consumed, otherwise Brewing is skipped.
+Brewing yields Tea.
+If cold Water then Heating changes Water from cold to hot, otherwise bypass Heating.
+Barista handles Pouring if Barista is rested, else Pouring is skipped.
+Pouring occurs if Kettle is ready, otherwise Pouring is skipped.
+Pouring affects Cup.
+
+// another object is consumed than the one of the condition
+== OPM-9-132
+Brewing occurs if Leaf exists, in which case Water is consumed, otherwise Brewing is skipped.
+Brewing yields Tea.
+
+// another process affects the object than the conditioned one
+== OPM-9-135
+Brewing occurs if Water exists, in which case Heating affects Water, otherwise Brewing is skipped.
+
+// the condition is on another object than the agent
+== OPM-9-138
+Barista handles Brewing if Trainee exists, else Brewing is skipped.
+Brewing affects Water.
+
+// another process is skipped than the conditioned one
+== OPM-9-141
+Brewing occurs if Kettle exists, else Pouring is skipped.
+Brewing affects Water.
+
+== OPM-9-144
+Leaf can be dry or wet.
+If dry Leaf exists then Brewing occurs and consumes Tea Bag, otherwise bypass Brewing.
+Brewing yields Tea.
+
+// the condition state is not the input state of the change
+== OPM-9-147
+Water can be cold or hot.
+Heating occurs if Water is hot, in which case Heating changes Water from cold to hot, otherwise Heating is skipped.
+
+== OPM-9-151
+Water can be cold or hot.
+Kettle can be cold or hot.
+If cold Water then Heating changes Kettle from cold, otherwise bypass Heating.
+
+== OPM-9-154
+Water can be cold or hot.
+Heating occurs if Water exists, in which case Heating changes Water to hot, otherwise Boiling is skipped.
+
+== OPM-9-157
+Barista can be rested or tired.
+Barista handles Brewing if Trainee is rested, else Brewing is skipped.
+Brewing affects Water.
+
+== OPM-9-160
+Kettle can be ready or busy.
+If ready Kettle then Brewing occurs, otherwise bypass Pouring.
+Brewing affects Water.
+
+// ... and in a condition fan (Tables 22, 23)
+== OPM-12-019
+Exactly one of Brewing or Steeping occurs if Leaf exists, in which case the occurring process consumes Water, otherwise these processes are skipped.
+Brewing yields Tea.
+Steeping yields Infusion.
+
+// links with AND semantics in separate sentences (12.1): E in the OPCloud profile; in the ISO profile I, because
+// the examples of the norm write separate sentences too (Figures 11, 33, 47; N-062)
+== OPM-12-002 | profile=opcloud
+Brewing consumes Leaf.
+Brewing consumes Water.
+Brewing yields Tea.
+
+== - | info=OPM-12-002
+Brewing consumes Leaf.
+Brewing consumes Water.
+Brewing yields Tea.
+
+// ... as Figure 33 of the norm: two agent sentences of one process, with different multiplicities
+== - | info=OPM-12-002 | humans=Barista, Trainee
+Two Baristas handle Brewing.
+An optional Trainee handles Brewing.
+Brewing affects Water.
+
+// "affects" and "changes" are different sentence forms: they cannot be joined, no OPM-12-002
+== -
+Water can be cold or hot.
+Brewing affects Kettle.
+Brewing changes Water from cold to hot.
+
+// a change only from a state and a change only to a state are different sentence forms (A.4.5.2.5): they cannot
+// be joined, no OPM-12-002
+== -
+Water can be cold or hot.
+Cup can be empty or full.
+Barista handles Brewing.
+Brewing changes Water from cold.
+Brewing changes Cup to full.
+
+// a lower-case word after a reserved verb is not a tag: the name is written wrongly
+== OPM-7-004
+Barista handles tea Brewing.
+Tea Brewing affects Water.
+
+// "consumes tea Leaf" reads as the state "tea" of Leaf; the hint names the thing "Tea Leaf" of the model
+== OPM-9-036
+Drying yields Tea Leaf.
+Drying consumes Raw Leaf.
+Brewing consumes tea Leaf.
+Brewing yields Tea.
+
+// paragraphs: label, root label, title, order (14.2.2.6); the paragraph cases below also show the accepted
+// paragraph input (OPM-14-076, OPM-14-077), named by covers=
+== OPM-14-076
+OPL specification of Tea Making
+SD: Tea Making
+Brewing affects Water.
+SD1 Brewing in-zoomed
+SD is refined by in-zooming Brewing in SD1.
+Brewing zooms into Heating and Pouring, in that sequence.
+Heating affects Water.
+Pouring affects Cup.
+
+== OPM-14-066, OPM-14-062
+OPL specification of Tea Making
+SD1: Tea Making
+Brewing affects Water.
+
+== OPM-14-078
+SD: Tea Making
+Brewing affects Water.
+
+== OPM-14-079
+OPL specification of Tea Making
+SD: Tea Making
+Brewing affects Water.
+SD2: Pouring in-zoomed
+SD1 is refined by in-zooming Pouring in SD2.
+Pouring zooms into Tilting and Filling, in that sequence.
+Tilting affects Cup.
+Filling affects Cup.
+SD1: Brewing in-zoomed
+SD is refined by in-zooming Brewing in SD1.
+Brewing zooms into Heating and Pouring, in that sequence.
+Heating affects Water.
+Pouring affects Cup.
+
+// ISO forms the grammar reads, used together (no false findings): a capitalised initial state (9.4.1 NOTE), and
+// multiplicity with ranges, parameters, expressions and a constraint (11.1, 11.2)
+== -
+Kettle can be ready or busy.
+Water can be cold or hot.
+Hot Water initiates Brewing, which changes Water from hot to cold.
+Ready Kettle initiates Brewing, which requires ready Kettle.
+Two to four Baristas handle Brewing.
+An optional Trainee handles Pouring.
+Brewing consumes 1 to 2 or 4 to 5 Leaves and k Spoons, where k <= 3.
+Brewing yields Tea.
+Pouring affects Cup.
+
+// OPCloud wording in the ISO profile: read, reported as I
+== - | info=DIALECT
+Leaf can be dry or wet.
+Brewing consumes Leaf at state dry.
+Brewing yields Tea.
+
+// one agent sentence for several processes (Figure 47, N-061): read as one agent link per process,
+// reported as I in the ISO profile
+== - | info=DIALECT | humans=Barista
+Barista handles Brewing and Pouring.
+Brewing affects Water.
+Pouring affects Cup.
+
+// ---------------------------------------------------------------- chapter 7
+== OPM-7-009
+Brewing affects Water.
+Water affects Kettle.
+
+// a transforming link with a process at the object end: reported once, as OPM-7-009 (not OPM-9-001)
+== OPM-7-009
+Brewing affects Water.
+Heating affects Brewing.
+
+// an enabling link with a process as the enabler: OPM-7-009 (not OPM-9-021)
+== OPM-7-009
+Brewing affects Water.
+Heating affects Water.
+Brewing handles Heating.
+
+// an invocation to an object: OPM-7-009 (not OPM-9-087)
+== OPM-7-009
+Brewing affects Water.
+Brewing invokes Water.
+
+== OPM-7-023
+Water can be cold, warm, or hot.
+State cold of Water is default.
+State warm of Water is default.
+Heating changes Water from cold to hot.
+
+== OPM-7-006
+Brewing affects Water.
+Repairing affects Kettle.
+Repairing occurs if duration of Brewing exceeds 0 min.
+
+== OPM-7-017
+Brewing is systemic.
+Brewing affects Water.
+
+// the primary essence is the essence of the majority of all things, a thing without a stated essence being
+// informatical (7.3.4, A.4.4.2): one physical thing among unstated ones states a non-default value
+== -
+Kettle is physical.
+Barista handles Brewing.
+Brewing requires Kettle.
+Brewing affects Water.
+Brewing yields Tea Report.
+
+// ... and when most things are physical, "is physical" states the default
+== OPM-7-017
+Kettle is physical.
+Water is physical.
+Brewing is physical.
+Brewing requires Kettle.
+Brewing affects Water.
+
+// ---------------------------------------------------------------- chapter 8
+== OPM-8-002
+Brewing requires Kettle.
+
+// a subprocess that transforms nothing: the link of the in-zoomed process in SD does not count for it
+== OPM-8-002
+OPL specification of Tea Making
+SD: Tea Making
+Barista handles Brewing.
+Brewing affects Water.
+SD1: Brewing in-zoomed
+SD is refined by in-zooming Brewing in SD1.
+Brewing zooms into Heating and Waiting, in that sequence.
+Heating affects Water.
+Barista handles Waiting.
+
+// ... but a link at the contour of the in-zoomed process (written in SD1) applies to each subprocess (14.2.2.4.1)
+== -
+OPL specification of Tea Making
+SD: Tea Making
+Barista handles Brewing.
+Brewing affects Water.
+SD1: Brewing in-zoomed
+SD is refined by in-zooming Brewing in SD1.
+Brewing zooms into Heating and Waiting, in that sequence.
+Brewing affects Water.
+Barista handles Waiting.
+
+== OPM-8-004
+Brewing requires Kettle.
+Brewing affects Kettle.
+
+// links of one kind with other states are two links: a change and a plain effect of one object (8.1.2)
+== OPM-8-004
+Water can be cold or hot.
+Heating changes Water from cold to hot.
+Heating affects Water.
+
+// two links of one kind at different states of the object are links of two object states (8.1.2, Figure 33)
+== -
+Cup can be clean or dirty.
+Barista handles Serving.
+Serving consumes clean Cup and dirty Cup.
+Serving yields Tray.
+
+// ... but not when they share a state
+== OPM-8-004 | info=OPM-12-002
+Water can be cold, warm, or hot.
+Heating changes Water from cold to warm.
+Heating changes Water from warm to hot.
+
+// a process refined by aggregation transforms through its parts (14.2.2.5)
+== -
+Barista handles Tea Serving.
+Tea Serving consists of Brewing and Pouring.
+Brewing affects Water.
+Pouring affects Cup.
+
+// ... a part that transforms nothing does not help
+== OPM-8-002
+Barista handles Tea Serving.
+Tea Serving consists of Waiting.
+Barista handles Waiting.
+
+// two links with different path labels belong to different execution paths (clause 13, Figure 43)
+== -
+Water can be cold, warm, or hot.
+Following path gentle, Heating changes Water from cold to warm.
+Following path strong, Heating changes Water from warm to hot.
+
+// ... a labelled and an unlabelled link of one object and process are still two links
+== OPM-8-004
+Water can be cold, warm, or hot.
+Following path gentle, Heating changes Water from cold to warm.
+Following path gentle, Heating requires Kettle.
+Heating requires Water.
+
+== OPM-8-008
+Brewing yields Tea.
+
+// an in-zoomed process is checked through its subprocesses (8.2.2): no subprocess has an input
+== OPM-8-008
+Brewing zooms into Steeping and Pouring, in that sequence.
+Steeping yields Infusion.
+Pouring yields Tea.
+
+// ... or no subprocess has an output
+== OPM-8-010
+Clearing zooms into Emptying and Discarding, in that sequence.
+Emptying consumes Cold Tea.
+Discarding consumes Leaf.
+
+// ... one subprocess with an input and one with an output are enough; so is a link at the in-zoomed process
+== -
+Brewing zooms into Steeping and Pouring, in that sequence.
+Steeping consumes Leaf.
+Pouring yields Tea.
+Serving zooms into Carrying and Placing, in that sequence.
+Barista handles Serving.
+Carrying yields Served Cup.
+Placing yields Used Tray.
+
+== OPM-8-010
+Brewing consumes Leaf.
+
+// ---------------------------------------------------------------- chapter 9
+== OPM-9-028 | humans=Barista
+Kettle handles Brewing.
+Brewing affects Water.
+
+== OPM-9-032 | humans=Barista
+Brewing requires Barista.
+Brewing affects Water.
+
+== OPM-9-036
+Water can be cold or hot.
+Brewing changes Water from cold to warm.
+
+// a state marked initial, final or default is one of the states of its object (7.3.5.1)
+== OPM-9-036
+Water can be cold or hot.
+State warm of Water is initial.
+Heating changes Water from cold to hot.
+
+== OPM-9-051
+Tea can be fresh or stale.
+State fresh of Tea is initial.
+Brewing consumes Leaf.
+Brewing yields fresh Tea.
+
+== OPM-9-054
+Water can be cold or hot.
+Brewing changes Water from hot to hot.
+
+// the minimal duration of a process exceeds the maximal one (9.5.4.1, implicit): W
+== OPM-9-170
+Brewing affects Water.
+Alarming occurs if duration of Brewing exceeds 2 min.
+Alarming yields Alert.
+Rechecking occurs if duration of Brewing falls short of 5 min.
+Rechecking affects Water.
+
+// ... different units are not compared, and a minimum below the maximum is fine
+== -
+Brewing affects Water.
+Steeping affects Leaf.
+Alarming occurs if duration of Brewing exceeds 2 min.
+Alarming yields Alert.
+Rechecking occurs if duration of Brewing falls short of 90 seconds.
+Rechecking affects Water.
+Stirring occurs if duration of Steeping falls short of 2 min.
+Stirring affects Leaf.
+Straining occurs if duration of Steeping exceeds 5 min.
+Straining affects Leaf.
+
+// ---------------------------------------------------------------- chapter 10
+== OPM-10-001
+Brewing affects Water.
+Brewing consists of Water.
+
+// the attribute (listed before "as well as") is the process "Heating of Kettle"
+== OPM-10-037
+Kettle exhibits Heating.
+Heating of Kettle affects Water.
+
+== OPM-10-050
+Temperature of Water can be cold or hot.
+Heating changes Temperature of Water from cold to hot.
+
+== OPM-10-070
+Kettle exhibits Capacity.
+Capacity of Kettle ranges from 1 to 2.
+Office Kettle is an instance of Kettle.
+Capacity of Office Kettle is 3.
+
+// a specialization uses the values its general declares for the attribute (10.3.4.2 NOTE): no OPM-9-036
+== -
+Kettle exhibits Color.
+Color of Kettle can be red or blue.
+Red Kettle is a Kettle.
+Blue Kettle is a Kettle.
+Red Kettle exhibits red Color.
+Color of Blue Kettle is blue.
+
+// "Attribute of X is v." uses a value when X inherits the possible values from its class or its general
+// (10.3.5.1, 10.3.4.3)
+== OPM-9-036
+Kettle exhibits Color.
+Color of Kettle can be red or blue.
+Office Kettle is an instance of Kettle.
+Color of Office Kettle is green.
+
+== OPM-9-036
+Kettle exhibits Color.
+Color of Kettle can be red or blue.
+Travel Kettle is a Kettle.
+Color of Travel Kettle is green.
+
+// ... without such a class or general the sentence declares the value (11.3)
+== -
+Kettle exhibits Color.
+Color of Kettle is green.
+
+== OPM-10-068
+Kettle exhibits Color.
+Color of Kettle can be red or blue.
+Red Kettle is a Kettle.
+Ruby Kettle is a Kettle.
+Red Kettle exhibits red Color.
+Ruby Kettle exhibits red Color.
+
+== OPM-10-085
+Kettle exhibits Capacity.
+Capacity of Kettle is 1.
+Capacity of Kettle is 2.
+
+// ---------------------------------------------------------------- chapter 11
+// the lower bound of a multiplicity range exceeds the upper one (11.1, implicit): W
+== OPM-11-023
+Brewing consumes 5 to 3 Leaves.
+Brewing yields Tea.
+
+== -
+Brewing consumes 1 to 2 or 4 to 5 Leaves.
+Brewing yields k to 3 Cups.
+
+// ---------------------------------------------------------------- chapters 12, 13
+== OPM-12-022
+Brewing consumes Leaf.
+Brewing yields Tea with probability 0,7 or Coffee.
+
+== OPM-12-023
+Brewing consumes Leaf.
+Brewing yields Tea with probability 0,7 or Coffee with probability 0,2.
+
+== OPM-13-001
+Following path green, Brewing consumes Green Leaf.
+Brewing yields Tea.
+
+// ---------------------------------------------------------------- chapter 14
+== OPM-14-020
+Kettle unfolds into Lid.
+Lid unfolds into Kettle.
+
+== OPM-14-051
+OPL specification of Tea Making
+SD: Tea Making
+Brewing affects Water.
+SD1: Brewing in-zoomed
+SD is refined by in-zooming Brewing in SD1.
+Brewing zooms into Heating and Pouring, in that sequence.
+Brewing consumes Leaf.
+Heating affects Water.
+Pouring yields Tea.
+
+== OPM-14-054
+OPL specification of Tea Making
+SD: Tea Making
+Brewing affects Water.
+SD1: Brewing in-zoomed
+SD is refined by in-zooming Brewing in SD1.
+Brewing zooms into Heating and Pouring, in that sequence.
+Heating affects Water.
+Cup initiates Pouring, which affects Cup.
+
+// an invocation is an event too (9.5.2.5.1): from outside it must not start a subprocess
+== OPM-14-054
+OPL specification of Tea Making
+SD: Tea Making
+Brewing affects Water.
+SD1: Brewing in-zoomed
+SD is refined by in-zooming Brewing in SD1.
+Brewing zooms into Heating and Pouring, in that sequence.
+Heating affects Water.
+Pouring affects Cup.
+Guest Arriving is environmental.
+Guest Arriving affects Door.
+Guest Arriving invokes Pouring.
+
+// ... an invocation between the subprocesses stays inside
+== -
+OPL specification of Tea Making
+SD: Tea Making
+Brewing affects Water.
+SD1: Brewing in-zoomed
+SD is refined by in-zooming Brewing in SD1.
+Brewing zooms into Heating and Pouring, in that sequence.
+Heating affects Water.
+Pouring affects Cup.
+Pouring invokes Heating.
+
+== OPM-14-055
+OPL specification of Tea Making
+SD: Tea Making
+Water can be cold or hot.
+Brewing changes Water from cold to hot.
+SD1: Brewing in-zoomed
+SD is refined by in-zooming Brewing in SD1.
+Brewing zooms into Heating and Pouring, in that sequence.
+Brewing changes Water from cold to hot.
+Pouring affects Cup.
+
+// the subprocesses consume Leaf, so in SD the link is consumption, not effect
+== OPM-14-086
+OPL specification of Tea Making
+SD: Tea Making
+Brewing affects Leaf.
+SD1: Brewing in-zoomed
+SD is refined by in-zooming Brewing in SD1.
+Brewing zooms into Heating and Pouring, in that sequence.
+Heating consumes Leaf.
+Pouring yields Tea.
+
+// Table 27: consumed by the first subprocess and created again by the second = effect in SD
+== - | covers=OPM-14-076,OPM-14-077
+OPL specification of Tea Making
+SD: Tea Making
+Brewing affects Leaf.
+SD1: Brewing in-zoomed
+SD is refined by in-zooming Brewing in SD1.
+Brewing zooms into Heating and Pouring, in that sequence.
+Heating consumes Leaf.
+Pouring yields Leaf.
+
+// NOTE 2 of 14.2.2.4.3 (N-050): an instrument that the subprocesses change and return stays an instrument in SD
+== -
+OPL specification of Cup Cleaning
+SD: Cup Cleaning
+Washing requires Machine.
+Washing affects Cup.
+SD1: Washing in-zoomed
+SD is refined by in-zooming Washing in SD1.
+Machine can be empty or loaded.
+Washing zooms into Loading and Rinsing, in that sequence.
+Loading changes Machine from empty to loaded.
+Rinsing changes Machine from loaded to empty.
+Rinsing affects Cup.
+
+// 14.2.4.1.3: the subprocesses use Kettle only under a condition, so the link in SD is a condition link too
+== OPM-14-091
+OPL specification of Tea Making
+SD: Tea Making
+Brewing requires Kettle.
+Brewing affects Water.
+SD1: Brewing in-zoomed
+SD is refined by in-zooming Brewing in SD1.
+Brewing zooms into Heating and Pouring, in that sequence.
+Heating occurs if Kettle exists, else Heating is skipped.
+Pouring occurs if Kettle exists, else Pouring is skipped.
+Heating affects Water.
+Pouring affects Water.
+
+// ... and the other way round: a condition link in SD, a plain link inside
+== OPM-14-091
+OPL specification of Tea Making
+SD: Tea Making
+Brewing occurs if Kettle exists, else Brewing is skipped.
+Brewing affects Water.
+SD1: Brewing in-zoomed
+SD is refined by in-zooming Brewing in SD1.
+Brewing zooms into Heating and Pouring, in that sequence.
+Heating requires Kettle.
+Heating affects Water.
+Pouring affects Water.
+
+// condition in SD and only conditions inside: the strongest modifier is kept, no finding
+== -
+OPL specification of Tea Making
+SD: Tea Making
+Brewing occurs if Kettle exists, else Brewing is skipped.
+Brewing affects Water.
+SD1: Brewing in-zoomed
+SD is refined by in-zooming Brewing in SD1.
+Brewing zooms into Heating and Pouring, in that sequence.
+Heating occurs if Kettle exists, else Heating is skipped.
+Heating affects Water.
+Pouring affects Water.
+
+== OPM-14-062
+OPL specification of Tea Making
+SD: Tea Making
+Brewing affects Water.
+SD1: Brewing in-zoomed
+Brewing zooms into Heating and Pouring, in that sequence.
+Heating affects Water.
+Pouring affects Cup.
+
+// the OPD tree (14.2.2.6.1.1, 14.2.2.6.1.4): the refined process is not in the parent OPD
+== OPM-14-094
+OPL specification of Tea Making
+SD: Tea Making
+Brewing affects Water.
+SD1: Serving in-zoomed
+SD is refined by in-zooming Serving in SD1.
+Serving zooms into Pouring and Carrying, in that sequence.
+Pouring affects Cup.
+Carrying affects Cup.
+
+// ... the parent OPD that the refinement sentence names is not a paragraph of the text (reported at the sentence)
+== OPM-14-094
+OPL specification of Tea Making
+SD: Tea Making
+Brewing affects Water.
+SD1: Brewing in-zoomed
+SD3 is refined by in-zooming Brewing in SD1.
+Brewing zooms into Heating and Pouring, in that sequence.
+Heating affects Water.
+Pouring affects Cup.
+
+// ... the refinement sentence names another process than the paragraph in-zooms
+== OPM-14-069
+OPL specification of Tea Making
+SD: Tea Making
+Brewing affects Water.
+SD is refined by in-zooming Brewing in SD1.
+SD1: Serving in-zoomed
+Serving zooms into Pouring and Carrying, in that sequence.
+Pouring affects Cup.
+Carrying affects Cup.
+
+// ... two OPDs refine each other: no path to the root SD
+== OPM-14-061
+OPL specification of Tea Making
+SD: Tea Making
+Brewing affects Water.
+SD1: Brewing in-zoomed
+SD2 is refined by in-zooming Brewing in SD1.
+Brewing zooms into Heating and Pouring, in that sequence.
+Heating affects Water.
+Pouring affects Cup.
+SD2: Heating in-zoomed
+SD1 is refined by in-zooming Heating in SD2.
+Heating zooms into Warming and Boiling, in that sequence.
+Warming affects Water.
+Boiling affects Water.
+Brewing affects Water.
+
+== OPM-14-067
+OPL specification of Tea Making
+SD: Tea Making
+Brewing affects Water.
+SD: Tea Serving
+Serving affects Cup.
+
+== OPM-14-068
+OPL specification of Tea Making
+SD: Tea Making
+Brewing affects Water.
+Serving affects Cup.
+
+== OPM-14-081
+Brewing consumes Leaf.
+Brewing yields Leaf.
+
+// facts of two OPDs about one object and one process (14.2.3, 9.2.1): consumed in SD, an
+// unchanged instrument at the contour in SD1
+== OPM-14-081
+OPL specification of Tea Making
+SD: Tea Making
+Brewing consumes Leaf.
+Brewing yields Tea.
+SD1: Brewing in-zoomed
+SD is refined by in-zooming Brewing in SD1.
+Brewing zooms into Steeping and Pouring, in that sequence.
+Brewing requires Leaf.
+Steeping affects Water.
+Pouring yields Tea.
+
+// a link of the in-zoomed process stated in SD has no counterpart in SD1 (14.2.2.4.1): W
+== OPM-14-050
+OPL specification of Tea Making
+SD: Tea Making
+Brewing requires Kettle.
+Brewing affects Water.
+SD1: Brewing in-zoomed
+SD is refined by in-zooming Brewing in SD1.
+Brewing zooms into Heating and Pouring, in that sequence.
+Heating affects Water.
+Pouring affects Water.
+
+// ... a feature of the object counts (as in Table 26 of the norm: the object in SD, its attribute in SD1)
+== -
+OPL specification of Cup Cleaning
+SD: Cup Cleaning
+Washing affects Cup.
+SD1: Washing in-zoomed
+SD is refined by in-zooming Washing in SD1.
+Cup exhibits Cleanliness.
+Cleanliness of Cup can be dirty or clean.
+Washing zooms into Soaking and Rinsing, in that sequence.
+Soaking affects Cleanliness of Cup.
+Rinsing changes Cleanliness of Cup from dirty to clean.
+
+== OPM-14-088
+Brewing zooms into Heating and Pouring, in that sequence.
+Heating consumes Leaf.
+Pouring consumes Leaf.
+Pouring yields Tea.
+
+== OPM-14-093
+Brewing zooms into Heating and Pouring, in that sequence.
+Brewing zooms into Boiling and Serving, in that sequence.
+Heating affects Water.
+Pouring affects Cup.
+Boiling affects Water.
+Serving affects Cup.
+
+// ---------------------------------------------------------------- Annex B (W)
+== OPM-B-002
+OPL specification of Tea Making
+SD: Tea Making
+Brewing consumes Leaf 1, Leaf 2, Leaf 3, Leaf 4, Leaf 5, Leaf 6, Leaf 7, Leaf 8, Leaf 9, Leaf 10, Leaf 11, Leaf 12, Leaf 13, Leaf 14, Leaf 15, Leaf 16, Leaf 17, Leaf 18, Leaf 19, Leaf 20, Leaf 21, Leaf 22, Leaf 23, Leaf 24, and Leaf 25.
+Brewing yields Tea.
+
+== OPM-B-006
+Lid can be open or closed.
+Kettle consists of Lid.
+Teapot consists of Lid.
+
+== OPM-B-007
+Brew affects Water.
+
+// B.6.4: the state is named with the gerund of the process that changes it
+== OPM-B-008
+Water can be cold or heating.
+Heating changes Water from cold to heating.
+
+// an -ing adjective that names no process describes a situation: no finding
+== -
+Water can be cold or boiling.
+Heating changes Water from cold to boiling.
+
+// ---------------------------------------------------------------- OPCloud profile
+== OPC-001 | profile=opcloud
+Water can be cold, warm, or hot.
+State warm of Water is final.
+State hot of Water is final.
+Heating changes Water from cold to hot.
+
+// the OPCloud sentence "State s is initial." marks a state of the object of the preceding state sentence;
+// without one it marks nothing: W
+== OPC-003 | profile=opcloud
+State hot is initial.
+Water can be cold or hot.
+Heating changes Water from cold to hot.
+
+== - | profile=opcloud
+Water can be cold or hot.
+State cold is initial.
+Heating changes Water from cold to hot.
+
+== OPC-002 | profile=opcloud
+Brewing is informatical.
+Heating is physical.
+Brewing zooms into Heating and Pouring, in that sequence.
+Heating affects Water.
+Pouring affects Cup.

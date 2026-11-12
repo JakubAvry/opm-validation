@@ -1,0 +1,148 @@
+# SD
+1. Customer is a physical and environmental object.
+2. Customer Service is a physical and systemic object.
+3. Grid Operator is a physical and environmental object.
+4. Old Supplier is a physical and environmental object.
+5. Crm System is an informatical and systemic object.
+6. Customer Database is an informatical and systemic object.
+7. Customer Information System is an informatical and systemic object.
+8. Error List is an informatical and systemic object.
+9. Sales Agreement is an informatical and environmental object.
+10. Sales Agreement can be active or terminated.
+11. State active is initial.
+12. Cis Contract is an informatical and systemic object.
+13. Cis Contract can be confirmed, offered or withdrawn.
+14. State offered is initial.
+15. Confirmation Document is an informatical and systemic object.
+16. Consumption Report is an informatical and environmental object.
+17. Contract Document Set is an informatical and systemic object.
+18. Contract Document Set can be confirmed, faulty or generated.
+19. State generated is initial.
+20. Customer Data is an informatical and environmental object.
+21. Customer Data Object is an informatical and systemic object.
+22. Customer Data Object can be entered, erroneous, existing, new or verified.
+23. State entered is initial.
+24. Customer Final Billing is an informatical and environmental object.
+25. Customer Object is an informatical and systemic object.
+26. Grid Final Billing is an informatical and environmental object.
+27. Response Comment is an informatical and environmental object.
+28. Switch-over Request is an informatical and environmental object.
+29. Switch-over Request can be clear, conflicting, forwarded or submitted.
+30. State submitted is initial.
+31. Power Supplier Switching is an informatical and systemic process.
+32. Customer, Customer Service, Grid Operator, and Old Supplier handle Power Supplier Switching.
+33. Power Supplier Switching requires Crm System, Customer Database, Customer Information System, and Error List.
+34. Power Supplier Switching affects Sales Agreement.
+35. Power Supplier Switching yields Cis Contract, Confirmation Document, Consumption Report, Contract Document Set, Customer Data, Customer Data Object, Customer Final Billing, Customer Object, Grid Final Billing, Response Comment, and Switch-over Request.
+# SD1
+1. Power Supplier Switching from SD zooms in SD1 into Switch-over Requesting, Customer Data Entering, Customer Data Checking, Error Correcting, Customer Data Comparing, Customer Object Creating, Contract Document Preparing, Contract Document Checking, Issue Resolving, Confirmation Document Sending, Grid Operator Requesting, Concurrence Checking, Conflict Resolving, Agreement Terminating, Cis Contract Creating, Contract Checking, Contract Accepting, Meter Data Transmitting, parallel Final Billing Computing and Meter Data Importing, and Customer Billing, which occur in that time sequence.
+2. Address is an informatical and systemic object.
+3. Name is an informatical and systemic object.
+4. Power Gauge is an informatical and systemic object.
+5. Customer is a physical and environmental object.
+6. Customer Data is an informatical and environmental object.
+7. Switch-over Request is an informatical and environmental object.
+8. Switch-over Request can be clear, conflicting, forwarded or submitted.
+9. State submitted is initial.
+10. Customer Service is a physical and systemic object.
+11. Crm System is an informatical and systemic object.
+12. Customer Data Object is an informatical and systemic object.
+13. Customer Data Object can be entered, erroneous, existing, new or verified.
+14. State entered is initial.
+15. Error List is an informatical and systemic object.
+16. Customer Database is an informatical and systemic object.
+17. Customer Object is an informatical and systemic object.
+18. Contract Document Set is an informatical and systemic object.
+19. Contract Document Set can be confirmed, faulty or generated.
+20. State generated is initial.
+21. Customer Information System is an informatical and systemic object.
+22. Confirmation Document is an informatical and systemic object.
+23. Grid Operator is a physical and environmental object.
+24. Response Comment is an informatical and environmental object.
+25. Old Supplier is a physical and environmental object.
+26. Sales Agreement is an informatical and environmental object.
+27. Sales Agreement can be active or terminated.
+28. State active is initial.
+29. Cis Contract is an informatical and systemic object.
+30. Cis Contract can be confirmed, offered or withdrawn.
+31. State offered is initial.
+32. Consumption Report is an informatical and environmental object.
+33. Grid Final Billing is an informatical and environmental object.
+34. Customer Final Billing is an informatical and environmental object.
+35. Customer Object consists of Address, Name, and Power Gauge.
+36. Power Supplier Switching is an informatical and systemic process.
+37. Switch-over Requesting is an informatical and systemic process.
+38. Customer initiates and handles Switch-over Requesting.
+39. Switch-over Requesting yields Customer Data and Switch-over Request.
+40. Customer Data Entering is an informatical and systemic process.
+41. Customer Service handles Customer Data Entering.
+42. Customer Data Entering requires Crm System and Customer Data.
+43. Customer Data Entering yields Customer Data Object.
+44. Customer Data Checking is an informatical and systemic process.
+45. Customer Service handles Customer Data Checking.
+46. Error Correcting is an informatical and systemic process.
+47. Error Correcting occurs if Customer Data Object is erroneous, in which case Error Correcting changes Customer Data Object from erroneous to verified, otherwise Error Correcting is skipped.
+48. Customer Service handles Error Correcting.
+49. Error Correcting requires Error List.
+50. Customer Data Comparing is an informatical and systemic process.
+51. Customer Service handles Customer Data Comparing.
+52. Customer Data Comparing requires Customer Database.
+53. Customer Object Creating is an informatical and systemic process.
+54. Customer Service handles Customer Object Creating.
+55. Customer Object Creating occurs if Customer Data Object is at state new, otherwise Customer Object Creating is skipped.
+56. Customer Object Creating yields Customer Object.
+57. Contract Document Preparing is an informatical and systemic process.
+58. Customer Service handles Contract Document Preparing.
+59. Contract Document Preparing requires Customer Object.
+60. Contract Document Preparing yields Contract Document Set.
+61. Contract Document Checking is an informatical and systemic process.
+62. Contract Document Checking requires Customer Information System.
+63. Issue Resolving is an informatical and systemic process.
+64. Issue Resolving occurs if Contract Document Set is faulty, in which case Issue Resolving changes Contract Document Set from faulty to generated, otherwise Issue Resolving is skipped.
+65. Confirmation Document Sending is an informatical and systemic process.
+66. Confirmation Document Sending occurs if Contract Document Set is at state confirmed, otherwise Confirmation Document Sending is skipped.
+67. Confirmation Document Sending yields Confirmation Document.
+68. Grid Operator Requesting is an informatical and systemic process.
+69. Grid Operator Requesting changes Switch-over Request from submitted to forwarded.
+70. Grid Operator Requesting requires Customer Information System.
+71. Concurrence Checking is an informatical and systemic process.
+72. Grid Operator handles Concurrence Checking.
+73. Concurrence Checking yields Response Comment.
+74. Conflict Resolving is an informatical and systemic process.
+75. Conflict Resolving occurs if Switch-over Request is conflicting, in which case Conflict Resolving changes Switch-over Request from conflicting to clear, otherwise Conflict Resolving is skipped.
+76. Grid Operator handles Conflict Resolving.
+77. Agreement Terminating is an informatical and systemic process.
+78. Agreement Terminating changes Sales Agreement from active to terminated.
+79. Grid Operator and Old Supplier handle Agreement Terminating.
+80. Cis Contract Creating is an informatical and systemic process.
+81. Customer Service handles Cis Contract Creating.
+82. Cis Contract Creating requires Customer Information System.
+83. Cis Contract Creating occurs if Switch-over Request is at state clear, otherwise Cis Contract Creating is skipped.
+84. Cis Contract Creating yields Cis Contract.
+85. Contract Checking is an informatical and systemic process.
+86. The maximal duration of Contract Checking is 7 d.
+87. Customer handles Contract Checking.
+88. Contract Accepting is an informatical and systemic process.
+89. Contract Accepting changes Cis Contract from offered to confirmed.
+90. Contract Accepting occurs if Contract Checking lasts more than 7 d.
+91. Meter Data Transmitting is an informatical and systemic process.
+92. Grid Operator handles Meter Data Transmitting.
+93. Meter Data Transmitting occurs if Cis Contract is at state confirmed, otherwise Meter Data Transmitting is skipped.
+94. Meter Data Transmitting yields Consumption Report.
+95. Final Billing Computing is an informatical and systemic process.
+96. Grid Operator handles Final Billing Computing.
+97. Final Billing Computing requires Consumption Report.
+98. Final Billing Computing yields Grid Final Billing.
+99. Meter Data Importing is an informatical and systemic process.
+100. Customer Service handles Meter Data Importing.
+101. Meter Data Importing requires Consumption Report.
+102. Meter Data Importing affects Customer Information System.
+103. Customer Billing is an informatical and systemic process.
+104. Old Supplier handles Customer Billing.
+105. Customer Billing requires Grid Final Billing.
+106. Customer Billing yields Customer Final Billing.
+107. Customer Data Checking changes Customer Data Object from entered to exactly one of erroneous or verified.
+108. Customer Data Comparing changes Customer Data Object from verified to exactly one of existing or new.
+109. Contract Document Checking changes Contract Document Set from generated to exactly one of confirmed or faulty.
+110. Concurrence Checking changes Switch-over Request from forwarded to exactly one of clear or conflicting.
+111. Contract Checking changes Cis Contract from offered to exactly one of confirmed or withdrawn.

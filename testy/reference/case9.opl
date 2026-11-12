@@ -1,0 +1,61 @@
+# SD
+1. Call Center Staff is a physical and systemic object.
+2. Customer is a physical and environmental object.
+3. Head Of Development is a physical and systemic object.
+4. Marketing Staff is a physical and systemic object.
+5. Pre-sales Employee is a physical and systemic object.
+6. Sales Representative is a physical and systemic object.
+7. Customer Contact is an informatical and systemic object.
+8. Customer Contact can be interested, new or uninterested.
+9. State new is initial.
+10. Customer Response is an informatical and environmental object.
+11. Presentation is an informatical and systemic object.
+12. Quotation is an informatical and systemic object.
+13. Customer Acquiring is an informatical and systemic process.
+14. Call Center Staff, Customer, Head Of Development, Marketing Staff, Pre-sales Employee, and Sales Representative handle Customer Acquiring.
+15. Customer Acquiring yields Customer Contact, Customer Response, Presentation, and Quotation.
+# SD1
+1. Customer Acquiring from SD zooms in SD1 into Contact Determining, Customer Calling, Personal Acquiring, Online Presenting, Customer Responding, Follow-up Calling, and Quotation Creating, which occur in that time sequence.
+2. Marketing Staff is a physical and systemic object.
+3. Customer Contact is an informatical and systemic object.
+4. Customer Contact can be interested, new or uninterested.
+5. State new is initial.
+6. Call Center Staff is a physical and systemic object.
+7. Budget of Customer Contact is an informatical and systemic object.
+8. Budget of Customer Contact can be huge or normal.
+9. Contact Person of Customer Contact is an informatical and systemic object.
+10. Head Of Development is a physical and systemic object.
+11. Pre-sales Employee is a physical and systemic object.
+12. Sales Representative is a physical and systemic object.
+13. Presentation is an informatical and systemic object.
+14. Customer is a physical and environmental object.
+15. Customer Response is an informatical and environmental object.
+16. Quotation is an informatical and systemic object.
+17. Customer Contact exhibits Budget and Contact Person.
+18. Customer Acquiring is an informatical and systemic process.
+19. Contact Determining is an informatical and systemic process.
+20. Marketing Staff handles Contact Determining.
+21. Contact Determining yields Customer Contact.
+22. Customer Calling is an informatical and systemic process.
+23. Call Center Staff handles Customer Calling.
+24. Customer Calling affects Budget of Customer Contact and Contact Person of Customer Contact.
+25. Personal Acquiring is an informatical and systemic process.
+26. Personal Acquiring occurs if Customer Contact is uninterested, in which case Personal Acquiring changes Customer Contact from uninterested to interested, otherwise Personal Acquiring is skipped.
+27. Head Of Development handles Personal Acquiring.
+28. Personal Acquiring occurs if Budget of Customer Contact is at state huge, otherwise Personal Acquiring is skipped.
+29. Online Presenting is an informatical and systemic process.
+30. Pre-sales Employee and Sales Representative handle Online Presenting.
+31. Online Presenting occurs if Customer Contact is at state interested, otherwise Online Presenting is skipped.
+32. Online Presenting yields Presentation.
+33. Customer Responding is an informatical and systemic process.
+34. The maximal duration of Customer Responding is 2 week.
+35. Customer handles Customer Responding.
+36. Customer Responding yields Customer Response.
+37. Follow-up Calling is an informatical and systemic process.
+38. Sales Representative handles Follow-up Calling.
+39. Follow-up Calling yields Customer Response.
+40. Follow-up Calling occurs if Customer Responding lasts more than 2 week.
+41. Quotation Creating is an informatical and systemic process.
+42. Quotation Creating requires Customer Contact.
+43. Quotation Creating yields Quotation.
+44. Customer Calling changes Customer Contact from new to exactly one of interested or uninterested.

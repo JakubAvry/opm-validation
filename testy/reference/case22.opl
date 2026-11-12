@@ -1,0 +1,66 @@
+# SD
+1. Bank Officer is a physical and systemic object.
+2. Customer is a physical and environmental object.
+3. Post Officer is a physical and environmental object.
+4. Bank Website is an informatical and systemic object.
+5. Identity of Customer is an informatical and environmental object.
+6. Account Document Set is a physical and systemic object.
+7. Account Request is a physical and environmental object.
+8. Account Request can be accepted, checked, mailed, printed or rejected.
+9. State printed is initial.
+10. Pdf Document is an informatical and environmental object.
+11. Personal Data is an informatical and environmental object.
+12. Refusal Letter is a physical and systemic object.
+13. Account Creating is a physical and systemic process.
+14. Bank Officer, Customer, and Post Officer handle Account Creating.
+15. Account Creating requires Bank Website.
+16. Account Creating affects Identity of Customer.
+17. Account Creating yields Account Document Set, Account Request, Pdf Document, Personal Data, and Refusal Letter.
+# SD1
+1. Account Creating from SD zooms in SD1 into Personal Data Filling, Pdf Document Generating, Pdf Document Printing, Identity Checking, Account Request Mailing, Customer Data Checking, Request Deciding, Account Document Mailing, and Refusal Letter Mailing, which occur in that time sequence.
+2. Customer is a physical and environmental object.
+3. Bank Website is an informatical and systemic object.
+4. Personal Data is an informatical and environmental object.
+5. Pdf Document is an informatical and environmental object.
+6. Account Request is a physical and environmental object.
+7. Account Request can be accepted, checked, mailed, printed or rejected.
+8. State printed is initial.
+9. Post Officer is a physical and environmental object.
+10. Identity of Customer is an informatical and environmental object.
+11. Bank Officer is a physical and systemic object.
+12. Account Document Set is a physical and systemic object.
+13. Refusal Letter is a physical and systemic object.
+14. Customer exhibits Identity.
+15. Account Creating is a physical and systemic process.
+16. Personal Data Filling is an informatical and environmental process.
+17. Customer handles Personal Data Filling.
+18. Personal Data Filling requires Bank Website.
+19. Personal Data Filling yields Personal Data.
+20. Pdf Document Generating is an informatical and environmental process.
+21. Customer handles Pdf Document Generating.
+22. Pdf Document Generating requires Bank Website and Personal Data.
+23. Pdf Document Generating yields Pdf Document.
+24. Pdf Document Printing is a physical and environmental process.
+25. Customer handles Pdf Document Printing.
+26. Pdf Document Printing requires Pdf Document.
+27. Pdf Document Printing yields Account Request.
+28. Identity Checking is an informatical and environmental process.
+29. Post Officer handles Identity Checking.
+30. Identity Checking affects Identity of Customer.
+31. Account Request Mailing is a physical and environmental process.
+32. Account Request Mailing changes Account Request from printed to mailed.
+33. Customer and Post Officer handle Account Request Mailing.
+34. Customer Data Checking is a physical and systemic process.
+35. Account Request at state mailed initiates Customer Data Checking, which changes Account Request from mailed to checked.
+36. Bank Officer handles Customer Data Checking.
+37. Request Deciding is a physical and systemic process.
+38. Bank Officer handles Request Deciding.
+39. Account Document Mailing is a physical and systemic process.
+40. Bank Officer handles Account Document Mailing.
+41. Account Document Mailing occurs if Account Request is at state accepted, otherwise Account Document Mailing is skipped.
+42. Account Document Mailing yields Account Document Set.
+43. Refusal Letter Mailing is a physical and systemic process.
+44. Bank Officer handles Refusal Letter Mailing.
+45. Refusal Letter Mailing occurs if Account Request is at state rejected, otherwise Refusal Letter Mailing is skipped.
+46. Refusal Letter Mailing yields Refusal Letter.
+47. Request Deciding changes Account Request from checked to exactly one of accepted or rejected.

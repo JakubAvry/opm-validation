@@ -1,0 +1,69 @@
+# SD
+1. Go is a physical and systemic object.
+2. Mpon is a physical and environmental object.
+3. Mpoo is a physical and environmental object.
+4. Metering Equipment is a physical and systemic object.
+5. Application is an informatical and systemic object.
+6. Application can be assigned, confirmed, failed, rejected or submitted.
+7. State submitted is initial.
+8. Assignment Confirmation is an informatical and systemic object.
+9. Assignment Notice is an informatical and systemic object.
+10. Completion Report is an informatical and environmental object.
+11. Failure Report is an informatical and environmental object.
+12. Registration Confirmation is an informatical and systemic object.
+13. Transaction Failure Notice is an informatical and systemic object.
+14. Metering Point Operator Changing is a physical and systemic process.
+15. Go, Mpon, and Mpoo handle Metering Point Operator Changing.
+16. Metering Point Operator Changing affects Metering Equipment.
+17. Metering Point Operator Changing yields Application, Assignment Confirmation, Assignment Notice, Completion Report, Failure Report, Registration Confirmation, and Transaction Failure Notice.
+# SD1
+1. Metering Point Operator Changing from SD zooms in SD1 into Meter Operation Reporting, Application Examining, Registration Confirmation Informing, Equipment Changing, Result Reporting, Transaction Failure Informing, Failure Confirming, Mpon Assigning, Assignment Confirming, and Assignment Informing, which occur in that time sequence.
+2. Mpon is a physical and environmental object.
+3. Application is an informatical and systemic object.
+4. Application can be assigned, confirmed, failed, rejected or submitted.
+5. State submitted is initial.
+6. Go is a physical and systemic object.
+7. Registration Confirmation is an informatical and systemic object.
+8. Mpoo is a physical and environmental object.
+9. Metering Equipment is a physical and systemic object.
+10. Completion Report is an informatical and environmental object.
+11. Failure Report is an informatical and environmental object.
+12. Transaction Failure Notice is an informatical and systemic object.
+13. Assignment Confirmation is an informatical and systemic object.
+14. Assignment Notice is an informatical and systemic object.
+15. Metering Point Operator Changing is a physical and systemic process.
+16. Meter Operation Reporting is an informatical and systemic process.
+17. Mpon handles Meter Operation Reporting.
+18. Meter Operation Reporting yields Application.
+19. Application Examining is an informatical and systemic process.
+20. Go handles Application Examining.
+21. Registration Confirmation Informing is an informatical and systemic process.
+22. Go handles Registration Confirmation Informing.
+23. Registration Confirmation Informing occurs if Application is at state confirmed, otherwise Registration Confirmation Informing is skipped.
+24. Registration Confirmation Informing yields Registration Confirmation.
+25. Equipment Changing is a physical and systemic process.
+26. Mpon and Mpoo handle Equipment Changing.
+27. Equipment Changing affects Metering Equipment.
+28. Result Reporting is an informatical and systemic process.
+29. Mpon handles Result Reporting.
+30. Transaction Failure Informing is an informatical and systemic process.
+31. Go handles Transaction Failure Informing.
+32. Transaction Failure Informing yields Transaction Failure Notice.
+33. Failure Confirming is an informatical and systemic process.
+34. Failure Confirming changes Application from confirmed to failed.
+35. Go handles Failure Confirming.
+36. Failure Confirming occurs if Failure Report exists, otherwise Failure Confirming is skipped.
+37. Mpon Assigning is an informatical and systemic process.
+38. Mpon Assigning changes Application from confirmed to assigned.
+39. Go handles Mpon Assigning.
+40. Mpon Assigning occurs if Completion Report exists, otherwise Mpon Assigning is skipped.
+41. Assignment Confirming is an informatical and systemic process.
+42. Go handles Assignment Confirming.
+43. Assignment Confirming occurs if Application is at state assigned, otherwise Assignment Confirming is skipped.
+44. Assignment Confirming yields Assignment Confirmation.
+45. Assignment Informing is an informatical and systemic process.
+46. Go handles Assignment Informing.
+47. Assignment Informing requires Application.
+48. Assignment Informing yields Assignment Notice.
+49. Application Examining changes Application from submitted to exactly one of confirmed or rejected.
+50. Result Reporting yields exactly one of Completion Report and Failure Report.

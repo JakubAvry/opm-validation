@@ -1,0 +1,89 @@
+# SD
+1. Company is a physical and systemic object.
+2. Securities & Exchange Commission is a physical and environmental object.
+3. Underwriter Group is a physical and environmental object.
+4. Underwriter Group can be candidate or selected.
+5. Blue-sky Law Set is an informatical and environmental object.
+6. Fact Presentation is an informatical and systemic object.
+7. Fact Presentation can be fair, presented or unfair.
+8. State presented is initial.
+9. Price of Stock Issue is an informatical and systemic object.
+10. Price of Stock Issue can be fixed or preliminary.
+11. State preliminary is initial.
+12. Stock Issue is an informatical and systemic object.
+13. Stock Issue can be compliant, new, offered or purchased.
+14. State new is initial.
+15. Advice is an informatical and systemic object.
+16. Firm Commitment is an informatical and systemic object.
+17. Registration Statement is an informatical and systemic object.
+18. Registration Statement can be approved or pending.
+19. State pending is initial.
+20. Road Show is an informatical and systemic object.
+21. Initial Public Offering is an informatical and systemic process.
+22. Company, Securities & Exchange Commission, and Underwriter Group handle Initial Public Offering.
+23. Initial Public Offering requires Blue-sky Law Set.
+24. Initial Public Offering affects Fact Presentation, Price of Stock Issue, and Stock Issue.
+25. Initial Public Offering yields Advice, Firm Commitment, Registration Statement, and Road Show.
+# SD1
+1. Initial Public Offering from SD zooms in SD1 into Underwriter Selecting, Advice Providing, Fact Evaluating, Registration Statement Preparing, Blue-sky Law Checking, parallel Registration Statement Approving, Issue Price Firming, and Road Show Arranging, Issue Price Fixing, Stock Purchasing, and Stock Offering, which occur in that time sequence.
+2. Company is a physical and systemic object.
+3. Underwriter Group is a physical and environmental object.
+4. Underwriter Group can be candidate or selected.
+5. Advice is an informatical and systemic object.
+6. Fact Presentation is an informatical and systemic object.
+7. Fact Presentation can be fair, presented or unfair.
+8. State presented is initial.
+9. Registration Statement is an informatical and systemic object.
+10. Registration Statement can be approved or pending.
+11. State pending is initial.
+12. Blue-sky Law Set is an informatical and environmental object.
+13. Stock Issue is an informatical and systemic object.
+14. Stock Issue can be compliant, new, offered or purchased.
+15. State new is initial.
+16. Securities & Exchange Commission is a physical and environmental object.
+17. Price of Stock Issue is an informatical and systemic object.
+18. Price of Stock Issue can be fixed or preliminary.
+19. State preliminary is initial.
+20. Road Show is an informatical and systemic object.
+21. Firm Commitment is an informatical and systemic object.
+22. Withdrawal Reason is an informatical and systemic object.
+23. Stock Issue exhibits Price.
+24. Initial Public Offering is an informatical and systemic process.
+25. Underwriter Selecting is an informatical and systemic process.
+26. Underwriter Selecting changes Underwriter Group from candidate to selected.
+27. Company initiates and handles Underwriter Selecting.
+28. Advice Providing is an informatical and systemic process.
+29. Underwriter Group handles Advice Providing.
+30. Advice Providing yields Advice.
+31. Fact Evaluating is an informatical and systemic process.
+32. Underwriter Group handles Fact Evaluating.
+33. Registration Statement Preparing is an informatical and systemic process.
+34. Underwriter Group handles Registration Statement Preparing.
+35. Registration Statement Preparing occurs if Fact Presentation is at state fair, otherwise Registration Statement Preparing is skipped.
+36. Registration Statement Preparing yields Registration Statement.
+37. Blue-sky Law Checking is an informatical and systemic process.
+38. Blue-sky Law Checking changes Stock Issue from new to compliant.
+39. Underwriter Group handles Blue-sky Law Checking.
+40. Blue-sky Law Checking requires Blue-sky Law Set.
+41. Registration Statement Approving is an informatical and systemic process.
+42. Registration Statement Approving changes Registration Statement from pending to approved.
+43. Securities & Exchange Commission handles Registration Statement Approving.
+44. Issue Price Firming is an informatical and systemic process.
+45. Underwriter Group handles Issue Price Firming.
+46. Issue Price Firming affects Price of Stock Issue.
+47. Road Show Arranging is an informatical and systemic process.
+48. Underwriter Group handles Road Show Arranging.
+49. Road Show Arranging yields Road Show.
+50. Issue Price Fixing is an informatical and systemic process.
+51. Issue Price Fixing changes Price of Stock Issue from preliminary to fixed.
+52. Underwriter Group handles Issue Price Fixing.
+53. approved Registration Statement initiates Issue Price Fixing, which requires approved Registration Statement.
+54. Stock Purchasing is an informatical and systemic process.
+55. Stock Purchasing changes Stock Issue from compliant to purchased.
+56. Underwriter Group handles Stock Purchasing.
+57. Stock Purchasing yields Firm Commitment.
+58. Stock Offering is an informatical and systemic process.
+59. Stock Offering changes Stock Issue from purchased to offered.
+60. Underwriter Group handles Stock Offering.
+61. Stock Offering occurs if Withdrawal Reason does not exist, otherwise Stock Offering is skipped.
+62. Fact Evaluating changes Fact Presentation from presented to exactly one of fair or unfair.

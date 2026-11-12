@@ -1,0 +1,175 @@
+# SD
+1. Family Doctor is a physical and environmental object.
+2. First Intaker is a physical and systemic object.
+3. Nursing Officer is a physical and systemic object.
+4. Psychiatrist is a physical and systemic object.
+5. Second Intaker is a physical and systemic object.
+6. Secretarial Office is a physical and systemic object.
+7. Team Leader is a physical and systemic object.
+8. Dictaphone is a physical and systemic object.
+9. Medical File Copy is a physical and environmental object.
+10. Personal Notebook is a physical and systemic object.
+11. Telephone is a physical and systemic object.
+12. Information System is an informatical and systemic object.
+13. Medical File is an informatical and environmental object.
+14. Medical File can be not required or required.
+15. New Notice List is an informatical and systemic object.
+16. Patient is a physical and environmental object.
+17. Registration Card is a physical and systemic object.
+18. Standard Checklist is a physical and systemic object.
+19. Assignment List is an informatical and systemic object.
+20. Letter is a physical and systemic object.
+21. Meeting is an informatical and systemic object.
+22. Notice is an informatical and environmental object.
+23. Patient File is a physical and systemic object.
+24. Patient Information is an informatical and systemic object.
+25. Patient List is an informatical and systemic object.
+26. Print is a physical and systemic object.
+27. Registration Form is a physical and systemic object.
+28. Registration Form can be handed in, recorded or stored.
+29. State recorded is initial.
+30. Tape is a physical and systemic object.
+31. Treatment Plan is an informatical and systemic object.
+32. Patient Intake Handling is a physical and systemic process.
+33. Family Doctor, First Intaker, Nursing Officer, Psychiatrist, Second Intaker, Secretarial Office, and Team Leader handle Patient Intake Handling.
+34. Patient Intake Handling requires Dictaphone, Medical File Copy, Personal Notebook, and Telephone.
+35. Patient Intake Handling affects Information System, Medical File, New Notice List, Patient, Registration Card, and Standard Checklist.
+36. Patient Intake Handling yields Assignment List, Letter, Meeting, Notice, Patient File, Patient Information, Patient List, Print, Registration Form, Tape, and Treatment Plan.
+# SD1
+1. Patient Intake Handling from SD zooms in SD1 into Notice Giving, Patient Inquiring, Doctor Connecting, Patient State Inquiring, Registration Form Handing, Information Storing, Information Printing, Patient File Creating, Registration Form Storing, Registration Card Producing, Patient Listing, Intaker Assigning, Medical File Determining, Assignment Storing, Registration Card Passing, Letter Sending, Second Intaker Informing, Copy Adding, First Meeting Planning, Patient Examining, Observation Registering, Notes Filing, Second Meeting Planning, Observation Recording, Tape Typing, Patient List Providing, and Treatment Plan Formulating, which occur in that time sequence.
+2. Medical Team is a physical and systemic object.
+3. Physician Group is a physical and systemic object.
+4. Social-medical Worker Group is a physical and systemic object.
+5. Basic Patient Data is an informatical and systemic object.
+6. Family Doctor is a physical and environmental object.
+7. Telephone is a physical and systemic object.
+8. Notice is an informatical and environmental object.
+9. Secretarial Office is a physical and systemic object.
+10. Patient Information is an informatical and systemic object.
+11. Nursing Officer is a physical and systemic object.
+12. Registration Form is a physical and systemic object.
+13. Registration Form can be handed in, recorded or stored.
+14. State recorded is initial.
+15. Information System is an informatical and systemic object.
+16. Print is a physical and systemic object.
+17. Patient File is a physical and systemic object.
+18. Registration Card is a physical and systemic object.
+19. New Notice List is an informatical and systemic object.
+20. Team Leader is a physical and systemic object.
+21. Assignment List is an informatical and systemic object.
+22. Medical File is an informatical and environmental object.
+23. Medical File can be not required or required.
+24. Letter is a physical and systemic object.
+25. Medical File Copy is a physical and environmental object.
+26. Second Intaker is a physical and systemic object.
+27. First Intaker is a physical and systemic object.
+28. Meeting is an informatical and systemic object.
+29. Patient is a physical and environmental object.
+30. Standard Checklist is a physical and systemic object.
+31. Personal Notebook is a physical and systemic object.
+32. Dictaphone is a physical and systemic object.
+33. Tape is a physical and systemic object.
+34. Patient List is an informatical and systemic object.
+35. Psychiatrist is a physical and systemic object.
+36. Treatment Plan is an informatical and systemic object.
+37. Medical Team consists of Physician Group, Psychiatrist, and Social-medical Worker Group.
+38. Patient File consists of Print and Registration Form.
+39. Registration Card consists of Basic Patient Data.
+40. Patient Intake Handling is a physical and systemic process.
+41. Notice Giving is an informatical and environmental process.
+42. Family Doctor handles Notice Giving.
+43. Notice Giving requires Telephone.
+44. Notice Giving yields Notice.
+45. Patient Inquiring is an informatical and systemic process.
+46. Secretarial Office handles Patient Inquiring.
+47. Patient Inquiring requires Notice.
+48. Patient Inquiring yields Patient Information.
+49. Doctor Connecting is an informatical and systemic process.
+50. Secretarial Office handles Doctor Connecting.
+51. Doctor Connecting requires Patient Information.
+52. Doctor Connecting affects Notice.
+53. Patient State Inquiring is a physical and systemic process.
+54. Family Doctor and Nursing Officer handle Patient State Inquiring.
+55. Patient State Inquiring yields Registration Form.
+56. Registration Form Handing is a physical and systemic process.
+57. Registration Form Handing changes Registration Form from recorded to handed in.
+58. Nursing Officer handles Registration Form Handing.
+59. Information Storing is an informatical and systemic process.
+60. Secretarial Office handles Information Storing.
+61. Information Storing requires Registration Form at state handed in.
+62. Information Storing affects Information System.
+63. Information Printing is a physical and systemic process.
+64. Secretarial Office handles Information Printing.
+65. Information Printing requires Information System.
+66. Information Printing yields Print.
+67. Patient File Creating is a physical and systemic process.
+68. Secretarial Office handles Patient File Creating.
+69. Patient File Creating yields Patient File.
+70. Registration Form Storing is a physical and systemic process.
+71. Registration Form Storing changes Registration Form from handed in to stored.
+72. Secretarial Office handles Registration Form Storing.
+73. Registration Form Storing affects Patient File.
+74. Registration Card Producing is a physical and systemic process.
+75. Secretarial Office handles Registration Card Producing.
+76. Registration Card Producing yields Registration Card.
+77. Patient Listing is an informatical and systemic process.
+78. Secretarial Office handles Patient Listing.
+79. Patient Listing affects New Notice List.
+80. Intaker Assigning is an informatical and systemic process.
+81. Team Leader handles Intaker Assigning.
+82. Intaker Assigning requires New Notice List.
+83. Intaker Assigning yields Assignment List.
+84. Medical File Determining is an informatical and systemic process.
+85. Team Leader handles Medical File Determining.
+86. Medical File Determining affects Assignment List and Medical File.
+87. Assignment Storing is an informatical and systemic process.
+88. Secretarial Office handles Assignment Storing.
+89. Assignment Storing requires Assignment List.
+90. Assignment Storing affects Information System.
+91. Registration Card Passing is a physical and systemic process.
+92. Secretarial Office handles Registration Card Passing.
+93. Registration Card Passing affects Registration Card.
+94. Letter Sending is a physical and systemic process.
+95. Secretarial Office handles Letter Sending.
+96. Letter Sending occurs if Medical File is at state required, otherwise Letter Sending is skipped.
+97. Letter Sending yields Letter.
+98. Second Intaker Informing is an informatical and systemic process.
+99. Secretarial Office handles Second Intaker Informing.
+100. Medical File Copy initiates Second Intaker Informing, which requires Medical File Copy.
+101. Second Intaker Informing affects Second Intaker.
+102. Copy Adding is a physical and systemic process.
+103. Secretarial Office handles Copy Adding.
+104. Copy Adding requires Medical File Copy.
+105. Copy Adding affects Patient File.
+106. First Meeting Planning is an informatical and systemic process.
+107. First Intaker handles First Meeting Planning.
+108. First Meeting Planning yields Meeting.
+109. Patient Examining is a physical and systemic process.
+110. First Intaker handles Patient Examining.
+111. Patient Examining requires Meeting.
+112. Patient Examining affects Patient and Standard Checklist.
+113. Observation Registering is a physical and systemic process.
+114. First Intaker handles Observation Registering.
+115. Observation Registering affects Personal Notebook.
+116. Notes Filing is a physical and systemic process.
+117. First Intaker handles Notes Filing.
+118. Notes Filing requires Personal Notebook and Standard Checklist.
+119. Notes Filing affects Patient File.
+120. Second Meeting Planning is an informatical and systemic process.
+121. Second Intaker handles Second Meeting Planning.
+122. Second Meeting Planning yields Meeting.
+123. Observation Recording is a physical and systemic process.
+124. Second Intaker handles Observation Recording.
+125. Observation Recording requires Dictaphone.
+126. Observation Recording yields Tape.
+127. Tape Typing is a physical and systemic process.
+128. Secretarial Office handles Tape Typing.
+129. Tape Typing requires Tape.
+130. Tape Typing affects Patient File.
+131. Patient List Providing is an informatical and systemic process.
+132. Secretarial Office handles Patient List Providing.
+133. Patient List Providing yields Patient List.
+134. Treatment Plan Formulating is an informatical and systemic process.
+135. First Intaker, Psychiatrist, Second Intaker, and Team Leader handle Treatment Plan Formulating.
+136. Treatment Plan Formulating requires Patient List.
+137. Treatment Plan Formulating yields Treatment Plan.
